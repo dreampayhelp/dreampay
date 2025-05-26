@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { addPlan } from '../services/api';
 import toast from 'react-hot-toast';
-import p3 from '../assets/p3.png'
+import p3 from '../assets/p4.jpg'
 const packages = [
   { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
   { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
