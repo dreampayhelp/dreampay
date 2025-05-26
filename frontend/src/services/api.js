@@ -1,6 +1,6 @@
 import axios from 'axios';
-const URL = "https://dreampay-backend.onrender.com/api"
-// let URL = "http://localhost:5555/api"
+// const URL = "https://dreampay-backend.onrender.com/api"
+let URL = "http://localhost:5555/api"
 //ji
 const api = axios.create({
        baseURL: URL,
