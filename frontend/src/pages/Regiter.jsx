@@ -39,7 +39,9 @@ export default function Register() {
         break;
       case 'password':
         if (value.length < 8) {
-          newErrors.password = 'Password must be at least 8 characters';
+          newErrors.password = 'Password must be least 8 characters';
+        }else{
+          delete newErrors.password;
         }
         break;
       case 'confirmPassword':
