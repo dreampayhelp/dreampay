@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { addPlan } from '../services/api';
 import toast from 'react-hot-toast';
+import p3 from '../assets/p3.png'
 const packages = [
   { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
   { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
@@ -292,7 +293,7 @@ const Join = () => {
                 Deposit via QR Code
               </h2>
               <img
-                src="https://qrcg-free-editor.qr-code-generator.com/main/assets/images/websiteQRCode_noFrame.png"
+                src={p3}
                 alt="PhonePe QR Code"
                 className="w-52 h-52 mb-4 rounded-lg shadow-md border border-indigo-600/50 
                 transform hover:scale-105 transition-transform duration-300"
