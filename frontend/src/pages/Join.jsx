@@ -3,17 +3,17 @@ import { useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { addPlan } from '../services/api';
 import toast from 'react-hot-toast';
-
 const packages = [
-  { id: 1, amount: 500, dailyIncome: 50 },
-  { id: 2, amount: 1000, dailyIncome: 100 },
-  { id: 3, amount: 2500, dailyIncome: 250, featured: true },
-  { id: 4, amount: 5000, dailyIncome: 500 },
-  { id: 5, amount: 8000, dailyIncome: 800 },
-  { id: 6, amount: 10000, dailyIncome: 1000 },
-  { id: 7, amount: 25000, dailyIncome: 2500 },
-  { id: 8, amount: 50000, dailyIncome: 5000 },
+  { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
+  { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
+  { id: 3, amount: 2499, dailyIncome: 200, featured: true, packageName: "Advance" },
+  { id: 4, amount: 4999, dailyIncome: 400, packageName: "Premium" },
+  { id: 5, amount: 7999, dailyIncome: 640, packageName: "Silver" },
+  { id: 6, amount: 9999, dailyIncome: 800, packageName: "Gold" },
+  { id: 7, amount: 24999, dailyIncome: 2000, packageName: "Diamond" },
+  { id: 8, amount: 49999, dailyIncome: 4000, packageName: "Platinum" },
 ];
+
 const Join = () => {
   const { user } = useSelector((s) => s.auth);
   const [image, setImage] = useState(null);
@@ -348,9 +348,8 @@ const Join = () => {
                     className={`flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 
                     rounded-full focus:outline-none focus:ring-4 focus:ring-green-400 
                     focus:ring-offset-2 transition-all duration-300 font-semibold shadow-md 
-                    hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center ${
-                      loading ? 'opacity-75 cursor-not-allowed' : 'hover:from-green-600 hover:to-green-700'
-                    }`}
+                    hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center ${loading ? 'opacity-75 cursor-not-allowed' : 'hover:from-green-600 hover:to-green-700'
+                      }`}
                     disabled={loading}
                   >
                     {loading ? (
@@ -397,9 +396,8 @@ const Join = () => {
                   className={`w-full max-w-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
                   py-3 px-6 rounded-full focus:outline-none focus:ring-4 focus:ring-indigo-400 
                   focus:ring-offset-2 transition-all duration-300 font-semibold shadow-md 
-                  hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center ${
-                    loading || !image ? 'opacity-75 cursor-not-allowed' : 'hover:from-indigo-700 hover:to-purple-700'
-                  }`}
+                  hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center ${loading || !image ? 'opacity-75 cursor-not-allowed' : 'hover:from-indigo-700 hover:to-purple-700'
+                    }`}
                   disabled={loading || !image}
                 >
                   Upload Screenshot

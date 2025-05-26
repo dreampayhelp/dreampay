@@ -51,9 +51,9 @@ export const requestOTP = async (req, res) => {
           </p>
           <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; margin: 20px 0;">
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Email:</strong> ${email}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Holder:</strong> ${AccountHolderName}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Number:</strong> ${AccountNo}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>IFSC Code:</strong> ${ifscCode}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Holder:</strong> ${user?.accountHolderName}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Number:</strong> ${user?.accountNo}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>IFSC Code:</strong> ${user?.ifscCode}</p>
           </div>
         </div>
         <!-- Footer -->

@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const packages = [
-  { id: 1, amount: 250, dailyIncome: 25 },
-  { id: 2, amount: 500, dailyIncome: 50 },
-  { id: 3, amount: 1000, dailyIncome: 100 },
-  { id: 4, amount: 2500, dailyIncome: 250 },
-  { id: 5, amount: 5000, dailyIncome: 500 },
+       { id: 1, amount: 499, dailyIncome: 50 },
+       { id: 2, amount: 999, dailyIncome: 100 },
+       { id: 3, amount: 2499, dailyIncome: 250, featured: true },
+       { id: 4, amount: 4999, dailyIncome: 500 },
+       { id: 5, amount: 7999, dailyIncome: 800 },
+       { id: 6, amount: 9999, dailyIncome: 1000 },
+       { id: 7, amount: 24999, dailyIncome: 2500 },
+       { id: 8, amount: 49999, dailyIncome: 5000 },
 ];
 
 const InvestmentPackages = () => {

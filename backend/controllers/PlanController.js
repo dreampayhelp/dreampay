@@ -7,14 +7,14 @@ import Plan from "../model/plan.js";
 import { error } from "console";
 
 const investmentPackages = [
-  { id: 1, amount: 500, dailyIncome: 50 },
-  { id: 2, amount: 1000, dailyIncome: 100 },
-  { id: 3, amount: 2500, dailyIncome: 250, },
-  { id: 4, amount: 5000, dailyIncome: 500 },
-  { id: 5, amount: 8000, dailyIncome: 800 },
-  { id: 6, amount: 10000, dailyIncome: 1000 },
-  { id: 7, amount: 25000, dailyIncome: 2500 },
-  { id: 8, amount: 50000, dailyIncome: 5000 },
+  { id: 1, amount: 500, dailyIncome: 40 },
+  { id: 2, amount: 1000, dailyIncome: 80 },
+  { id: 3, amount: 2500, dailyIncome: 200 },
+  { id: 4, amount: 5000, dailyIncome: 400 },
+  { id: 5, amount: 8000, dailyIncome: 640 },
+  { id: 6, amount: 10000, dailyIncome: 800 },
+  { id: 7, amount: 25000, dailyIncome: 2000 },
+  { id: 8, amount: 50000, dailyIncome: 4000 },
 ];
 
 // Add Investment Plan to User
@@ -47,6 +47,7 @@ export const uploadSst = async (req, res) => {
     const newSst = await PaymentScreenShot.create({
       imageUrl: uploadResult.secure_url,
       paymentDate: new Date(),
+      packageId : Number(selectedPackage.id),
       money: selectedPackage.amount,
       owner: user._id,
     });
@@ -74,14 +75,14 @@ export const uploadSst = async (req, res) => {
         <div style="padding: 30px; background-color: #ffffff;">
           <h2 style="color: #1f2937; font-size: 24px; margin-bottom: 20px;">Package Purchase Received</h2>
           <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
-            Hello ${user.name || 'Valued Customer'},<br/><br/>
+            Hello ${user?.name || 'Valued Customer'},<br/><br/>
             Thank you for purchasing a package with us! We have received your payment screenshot, and your request is being processed.
           </p>
           <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; margin: 20px 0;">
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>User ID:</strong> ${userId}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Email:</strong> ${user.email}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Package Amount:</strong> ₹${selectedPackage.amount.toLocaleString()}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Daily Income:</strong> ₹${selectedPackage.dailyIncome.toLocaleString()}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Email:</strong> ${user?.email}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Package Amount:</strong> ₹${selectedPackage?.amount.toLocaleString()}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Daily Income:</strong> ₹${selectedPackage?.dailyIncome.toLocaleString()}</p>
           </div>
           <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
             Your package will be processed within 24 hours. You'll receive a confirmation email once it's approved.
@@ -112,8 +113,8 @@ export const uploadSst = async (req, res) => {
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>User ID:</strong> ${userId}</p>
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Email:</strong> ${user.email}</p>
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Package ID:</strong> ${packageId}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Screenshot ID:</strong> ${newSst._id}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Amount:</strong> ₹${selectedPackage.amount.toLocaleString()}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Screenshot ID:</strong> ${newSst?._id}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Amount:</strong> ₹${selectedPackage?.amount.toLocaleString()}</p>
           </div>
           <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
             Please verify the payment screenshot and approve the package within 24 hours.

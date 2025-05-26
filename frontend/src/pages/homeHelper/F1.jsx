@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const packages = [
-       { id: 1, amount: 500, dailyIncome: 50 },
-       { id: 2, amount: 1000, dailyIncome: 100 },
-       { id: 3, amount: 2500, dailyIncome: 250, featured: true },
-       { id: 4, amount: 5000, dailyIncome: 500 },
-       { id: 5, amount: 8000, dailyIncome: 800 },
-       { id: 6, amount: 10000, dailyIncome: 1000 },
-       { id: 7, amount: 25000, dailyIncome: 2500 },
-       { id: 8, amount: 50000, dailyIncome: 5000 },
+  { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
+  { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
+  { id: 3, amount: 2499, dailyIncome: 200, featured: true, packageName: "Advance" },
+  { id: 4, amount: 4999, dailyIncome: 400, packageName: "Premium" },
+  { id: 5, amount: 7999, dailyIncome: 640, packageName: "Silver" },
+  { id: 6, amount: 9999, dailyIncome: 800, packageName: "Gold" },
+  { id: 7, amount: 24999, dailyIncome: 2000, packageName: "Diamond" },
+  { id: 8, amount: 49999, dailyIncome: 4000, packageName: "Platinum" },
 ];
+
 
 const F1 = () => {
        const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -75,7 +76,7 @@ const F1 = () => {
                                                         className={`text-xl font-semibold text-white mb-2 text-center group-hover:text-${pkg.featured ? 'teal' : 'indigo'
                                                                }-300 transition-colors`}
                                                  >
-                                                        Package {pkg.id}
+                                                         {pkg.packageName}
                                                  </h3>
                                                  <p
                                                         className={`text-3xl font-bold text-${pkg.featured ? 'teal' : 'indigo'
@@ -105,7 +106,7 @@ const F1 = () => {
                                                                >
                                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                                                </svg>
-                                                               Total Return: ₹{(pkg.dailyIncome * 20).toLocaleString()}
+                                                               Total Return: ₹{(((pkg.amount)+1) * 2).toLocaleString()}
                                                         </li>
                                                  </ul>
                                                  <Link to={handleJoinClick(pkg.id)}>

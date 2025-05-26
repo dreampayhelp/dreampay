@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserById, updateUser, VerifySst } from "../../services/api";
 import toast from "react-hot-toast";
@@ -186,7 +186,64 @@ const UserDetails = () => {
                                                  Update User
                                           </button>
                                    </form>
+                                   <div data-aos="fade-up" data-aos-delay="300">
+                                          <h3 className="text-xl font-semibold text-white mb-4">Payment History</h3>
+                                          <div className="bg-gray-700 rounded-lg p-4 max-h-72 overflow-y-auto">
+                                                 {user?.paymentScreenshots?.length > 0 ? (
+                                                        user?.paymentScreenshots?.map((payment, index) => (
+                                                               <div
+                                                                      key={index}
+                                                                      className="flex items-center py-4 border-b border-gray-600 last:border-b-0 
+                    hover:bg-gray-600 transition-colors"
+                                                               >
+                                                                      <Link to={payment?.imageUrl}>
+                                                                             <img
+                                                                                    src={payment?.imageUrl}
+                                                                                    alt="Payment"
+                                                                                    className="w-16 h-16 object-cover rounded-md mr-4"
+                                                                                    onError={(e) => (e.target.src = '/placeholder-image.png')} // Fallback image
+                                                                             />
+                                                                      </Link>
 
+                                                                      <div className="space-y-1">
+                                                                             <p className="text-sm text-gray-300">
+                                                                                    <span className="font-medium">Amount:</span> ₹{payment?.money?.toLocaleString()}
+                                                                             </p>
+                                                                             <p className="text-sm text-gray-300">
+                                                                                    <span className="font-medium">Date:</span>{' '}
+                                                                                    {new Date(payment?.paymentDate).toLocaleString('en-US', {
+                                                                                           year: 'numeric',
+                                                                                           month: 'short',
+                                                                                           day: 'numeric',
+                                                                                           hour: 'numeric',
+                                                                                           minute: 'numeric',
+                                                                                    })}
+                                                                             </p>
+                                                                             <p className="text-sm text-gray-300">
+                                                                                    <span className="font-medium">Transaction ID:</span> {payment?._id}
+                                                                             </p>
+                                                                             <p className="text-sm text-gray-300">
+                                                                                    <span className="font-medium">packageId ID:</span> {payment?.packageId }
+                                                                             </p>
+                                                                             <p className="text-sm text-gray-300">
+                                                                                    <span className="font-medium">verification ID:</span> {payment?.verifiedPlan ? 'true' : 'false'}
+                                                                             </p>
+                                                                      </div>
+                                                               </div>
+                                                        ))
+                                                 ) : (
+                                                        <div className="text-center py-4">
+                                                               <p className="text-gray-400">No payment history available.</p>
+                                                               <Link
+                                                                      to="/make-payment"
+                                                                      className="text-indigo-400 hover:text-indigo-300 hover:underline"
+                                                               >
+                                                                      Make a Payment
+                                                               </Link>
+                                                        </div>
+                                                 )}
+                                          </div>
+                                   </div>
                                    <div className="p-4 bg-gray-700 rounded">
                                           <h3 className="text-lg font-semibold text-white mb-4">Verify Screenshot</h3>
                                           <div className="space-y-4">

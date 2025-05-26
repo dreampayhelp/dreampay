@@ -87,13 +87,12 @@ const D2 = ({ profile, level, progress, referrals }) => {
             <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
               <span className="text-indigo-400">💰</span> Referrals Income
             </h2>
-            <Link
-              to="/balance"
+            <div
               className="text-xl md:text-2xl font-medium text-white hover:text-yellow-400 
             transition-colors duration-300"
             >
               ₹{(referrals?.referrals?.length * 50).toLocaleString()}
-            </Link>
+            </div>
           </div>
         </Link>
 

@@ -70,7 +70,7 @@ const Profile = () => {
     }
     setShowPopup(false);
   };
-
+console.log(user)
   if (loading) {
     return (
       <div
@@ -381,7 +381,13 @@ const Profile = () => {
                         })}
                       </p>
                       <p className="text-sm text-gray-300">
-                        <span className="font-medium">Transaction ID:</span> {payment._id}
+                        <span className="font-medium">Transaction ID:</span> {payment?._id}
+                      </p>
+                      <p className="text-sm text-gray-300">
+                        <span className="font-medium">Packgae ID:</span> {payment?.packageId}
+                      </p>
+                      <p className="text-sm text-gray-300">
+                        <span className="font-medium">verification : </span> {payment?.verifiedPlan ? 'true' : 'false'}
                       </p>
                     </div>
                   </div>
