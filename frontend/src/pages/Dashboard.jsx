@@ -93,8 +93,19 @@ export default function Dashboard() {
     if (referralCount >= 5) return 60;
     return Math.min(referralCount * 10, 100);
   };
+console.log(user)
   return (
     <div className="min-h-screen bg-gray-900 mt-16 py-16 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
+      {!user?.kycVerified && (
+        <div className="absolute top-[23px] w-[100vw] overflow-hidden">
+          <div 
+            to={"/re"}
+            className="inline-block border-red-500 text-red-400  px-4 py-2  whitespace-nowrap animate-slide rounded-3xl"
+          >
+            <Link to={'/request-otp'}>Please verify your Account Details for withdrawal</Link>
+          </div>
+        </div>
+      )}
       {/* Background decorative elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-900 rounded-full opacity-20 blur-3xl animate-pulse-slow"></div>

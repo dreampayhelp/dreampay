@@ -26,12 +26,12 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="John Doe"
+                  src=""
+                  alt="Mohan Lal Singh"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
                 />
                 <div>
-                  <p className="font-semibold text-white">John Doe</p>
+                  <p className="font-semibold text-white">Mohan Lal Singh</p>
                   <p className="text-sm text-gray-500">Member since 2023</p>
                 </div>
               </div>
@@ -49,12 +49,12 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src="https://randomuser.me/api/portraits/women/44.jpg"
-                  alt="Jane Smith"
+                  src=""
+                  alt="Riya Kumari"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
                 />
                 <div>
-                  <p className="font-semibold text-white">Jane Smith</p>
+                  <p className="font-semibold text-white">Riya Kumari</p>
                   <p className="text-sm text-gray-500">Member since 2024</p>
                 </div>
               </div>
@@ -72,12 +72,12 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src="https://randomuser.me/api/portraits/men/15.jpg"
-                  alt="Mike Johnson"
+                  src=""
+                  alt="Aadya Mathur"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
                 />
                 <div>
-                  <p className="font-semibold text-white">Mike Johnson</p>
+                  <p className="font-semibold text-white">Aadya Mathur</p>
                   <p className="text-sm text-gray-500">Member since 2022</p>
                 </div>
               </div>

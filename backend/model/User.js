@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   referralBonus: { type: Number, default: 0 }, // Tracks referral earnings
   level: { type: Number, default: 1 }, // Default level is 1
   accountNo: { type: String, },
+  upiId: { type: String, },
   accountHolderName: String,
   ifscCode: { type: String, },
   phoneNo: { type: String,default:"" },

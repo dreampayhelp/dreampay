@@ -69,15 +69,16 @@ const Footer = () => {
                                                  </a>
                                           </li>
 
-                                          <li>Address: Floor No.: Ground Floor
-                                                 Building No./Flat No.: Shop No. 1 Plot No. 9
-                                                 Name Of Premises/Building: Krishna Sagar CHS Road/Street: Sector- 26 Phase-2
-                                                 Nearby Landmark: Dr Vivek Rathod Road
-                                                 Locality/Sub Locality: Taloja Pachanand
-                                                 City/Town/Village: Navi Mumbai
-                                                 District: Raigad
-                                                 State: Maharashtra
-                                                 PIN Code: 410208</li>
+                                          <li class="text-gray-200 font-medium">
+                                                 Address:
+                                                 <ul class="ml-4 mt-2 space-y-1 text-gray-400">
+                                                        <li>Floor No.: <span class="font-normal">Ground Floor</span></li>
+                                                        <li>Building No./Flat No.: <span class="font-normal">Shop No. 1, Plot No. 9</span></li>
+                                                        <li>Name of Premises/Building: <span class="font-normal">Krishna Sagar CHS</span></li>
+                                                        <li>Road/Street: <span class="font-normal">Sector-26, Phase-2</span></li>
+
+                                                 </ul>
+                                          </li>
                                    </ul>
                             </div>
 

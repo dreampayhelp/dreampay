@@ -12,6 +12,7 @@ const RequestOTP = () => {
     AccountNo: '',
     AccountHolderName: '',
     ifscCode: '',
+    upiId: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -28,6 +29,9 @@ const RequestOTP = () => {
     if (!/^[a-zA-Z\s]+$/.test(AccountHolderName)) {
       return 'Holder name must contain only letters and spaces';
     }
+    // if (!upiId) {
+    //   return 'put your Upi Id';
+    // }
     if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifscCode)) {
       return 'Invalid IFSC code (e.g., SBIN0001234)';
     }
@@ -122,6 +126,21 @@ const RequestOTP = () => {
               name="ifscCode"
               placeholder="e.g., SBIN0001234"
               value={formData.ifscCode}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-700 text-gray-200 rounded border border-gray-600 focus:ring-indigo-400 focus:border-indigo-400 transition"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="ifscCode" className="block text-sm text-gray-300 mb-1">
+              UPI Id
+            </label>
+            <input
+              type="text"
+              id="upiId"
+              name="upiId"
+              placeholder="e.g., 9956785476@yblupiId"
+              value={formData.upiId}
               onChange={handleChange}
               className="w-full p-3 bg-gray-700 text-gray-200 rounded border border-gray-600 focus:ring-indigo-400 focus:border-indigo-400 transition"
               required

@@ -41,6 +41,7 @@ const VerifyOTP = () => {
       setLoading(true);
       const response = await verifyKYCOTP({ email, otp });
       if (response.data.success) {
+        
         setSuccess(response.data.message);
         toast.success('KYC verified successfully');
         navigate('/dashboard');

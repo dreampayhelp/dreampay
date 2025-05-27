@@ -191,7 +191,7 @@ export const withdrawMoney = async (req, res) => {
 
               const user = await User.findById(userId);
               if (!user) {
-                     return res.status(404).json({ message: "User not found", success: false });
+                     return res.status(400).json({ message: "User not found", success: false });
               }
               if (user.plans.length < 1) {
                      return res.status(400).json({
@@ -199,6 +199,12 @@ export const withdrawMoney = async (req, res) => {
                             success: false,
                      });
               }
+              // if (!user.kycVerified) {
+              //        return res.status(400).json({
+              //               message: "You must have to do your KYC",
+              //               success: false,
+              //        });
+              // }
               if (user.balance < money) {
                      return res.status(400).json({ message: "Insufficient balance", success: false });
               }
@@ -309,7 +315,6 @@ export const withdrawMoney = async (req, res) => {
                      success: true,
               });
        } catch (error) {
-              console.error("Error in withdrawMoney:", error);
               res.status(500).json({
                      message: "Server error",
                      error: error.message,

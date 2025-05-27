@@ -282,12 +282,7 @@ const UsersList = () => {
                       >
                         Update
                       </button>
-                      <span
-                        className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
-                        text-xs rounded p-2 -mt-10 w-48"
-                      >
-                        Edit user details (admin only).
-                      </span>
+                    
                     </td>
                     <td className="p-3 relative group">
                       <Link to={`/profile/${user._id}`}>
@@ -301,12 +296,7 @@ const UsersList = () => {
                           See Details
                         </button>
                       </Link>
-                      <span
-                        className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
-                        text-xs rounded p-2 -mt-10 w-48"
-                      >
-                        View detailed user profile.
-                      </span>
+                    
                     </td>
                   </tr>
                 ))

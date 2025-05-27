@@ -238,7 +238,7 @@ const Home = () => {
                   "Dream Pay has transformed my financial journey. The referral
                   program is easy to use, and I've earned more than I expected!"
                 </p>
-                <p className="text-yellow-400 font-semibold">– Sarah M.</p>
+                <p className="text-yellow-400 font-semibold">– Mahant Kushwaha</p>
               </div>
               <div
                 className="bg-gray-700 p-6 rounded-lg shadow-md"
@@ -249,7 +249,7 @@ const Home = () => {
                   "The investment packages are fantastic, and the platform is so
                   secure. I feel confident growing my wealth here."
                 </p>
-                <p className="text-yellow-400 font-semibold">– James K.</p>
+                <p className="text-yellow-400 font-semibold">– Karan Kamra </p>
               </div>
               <div
                 className="bg-gray-700 p-6 rounded-lg shadow-md"
@@ -260,7 +260,7 @@ const Home = () => {
                   "The support team is amazing, and the dashboard is super intuitive.
                   Dream Pay makes earning effortless."
                 </p>
-                <p className="text-yellow-400 font-semibold">– Maria L.</p>
+                <p className="text-yellow-400 font-semibold">– Mahi Singh.</p>
               </div>
             </div>
           </div>

@@ -63,17 +63,15 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div
-          className={`${
-            isOpen ? 'block' : 'hidden'
-          } md:flex md:items-center md:space-x-0 absolute md:static top-full left-0 w-full md:w-auto bg-gray-800 md:bg-transparent px-6 md:px-0 py-6 md:py-0 transition-all duration-500 ease-in-out transform ${
-            isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 md:opacity-100 md:translate-y-0'
-          } border-t border-gray-700 md:border-0`}
+          className={`${isOpen ? 'block' : 'hidden'
+            } md:flex md:items-center md:space-x-0 absolute md:static top-full left-0 w-full md:w-auto bg-gray-800 md:bg-transparent px-6 md:px-0 py-6 md:py-0 transition-all duration-500 ease-in-out transform ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 md:opacity-100 md:translate-y-0'
+            } border-t border-gray-700 md:border-0`}
         >
           {isAuthenticated ? (
             <>
-              {!isAdmin  && <Link
+              {!isAdmin && <Link
                 to="/dashboard"
-                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                 style={{ animationDelay: '0.1s' }}
                 onClick={() => setIsOpen(false)}
               >
@@ -83,15 +81,15 @@ export default function Navbar() {
                 <>
                   <Link
                     to={`/balance/${user?._id}`}
-                    className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                    className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                     style={{ animationDelay: '0.2s' }}
                     onClick={() => setIsOpen(false)}
                   >
-                    Balance
+                    Withdraw
                   </Link>
                   <Link
                     to={`/profile/${user?._id}`}
-                    className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                    className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                     style={{ animationDelay: '0.3s' }}
                     onClick={() => setIsOpen(false)}
                   >
@@ -99,10 +97,18 @@ export default function Navbar() {
                   </Link>
                 </>
               )}
+              <Link
+                to="/invest"
+                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                style={{ animationDelay: isAuthenticated ? '0.6s' : '0.3s' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Packages
+              </Link>
               {isAdmin && (
                 <Link
                   to="/admin/users"
-                  className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                  className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                   style={{ animationDelay: '0.4s' }}
                   onClick={() => setIsOpen(false)}
                 >
@@ -111,9 +117,8 @@ export default function Navbar() {
               )}
               <button
                 onClick={handleLogout}
-                className={`block text-gray-200 py-3 md:py-0 text-lg font-medium transition-all duration-300 w-full text-left md:w-auto flex items-center ${
-                  loading ? 'opacity-75 cursor-not-allowed' : 'hover:text-yellow-400 hover:bg-gray-700 md:hover:bg-transparent'
-                } animate-fade-in-up rounded-md px-3`}
+                className={` text-gray-200 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 w-full text-left md:w-auto flex items-center ${loading ? 'opacity-75 cursor-not-allowed' : 'hover:text-yellow-400 hover:bg-gray-700 md:hover:bg-transparent'
+                  } animate-fade-in-up rounded-md px-3`}
                 style={{ animationDelay: '0.5s' }}
                 disabled={loading}
               >
@@ -150,7 +155,7 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                 style={{ animationDelay: '0.1s' }}
                 onClick={() => setIsOpen(false)}
               >
@@ -158,7 +163,7 @@ export default function Navbar() {
               </Link>
               <Link
                 to="/register"
-                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+                className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
                 style={{ animationDelay: '0.2s' }}
                 onClick={() => setIsOpen(false)}
               >
@@ -168,15 +173,15 @@ export default function Navbar() {
           )}
           <Link
             to="/contact"
-            className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+            className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
             style={{ animationDelay: isAuthenticated ? '0.6s' : '0.3s' }}
             onClick={() => setIsOpen(false)}
           >
-            Contact-us
+            Contact
           </Link>
           <Link
             to="/about"
-            className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
+            className="block text-gray-200 hover:text-yellow-400 py-3 md:py-0 text-lg md:text-sm lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3"
             style={{ animationDelay: isAuthenticated ? '0.6s' : '0.3s' }}
             onClick={() => setIsOpen(false)}
           >

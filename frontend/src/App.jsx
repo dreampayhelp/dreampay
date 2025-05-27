@@ -20,6 +20,7 @@ import StreakTracker from './pages/DeshBoardHelper/StreakTracker';
 import UserPlans from './pages/DeshBoardHelper/UserPlans';
 import ContactUs from './pages/ContactUs';
 import D3 from './pages/DeshBoardHelper/D3';
+import F1 from './pages/homeHelper/F1';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {

@@ -54,6 +54,9 @@ const Balance = ({ userId }) => {
     try {
       setRequestLoading(true);
       const amount = Number(money);
+      if (!user?.kycVerified) {
+        throw new Error('Please verify your Account Details.');
+      }
       if (isNaN(amount) || amount <= 0) {
         throw new Error('Please enter a valid amount.');
       }
@@ -65,6 +68,7 @@ const Balance = ({ userId }) => {
         throw new Error('Minimum withdraw ₹200.');
       }
       const res = await withdrawMoney({ userId: user._id, money: amount });
+      console.log(res)
       if (res.data.success) {
         await fetchUser();
         setMoney('');
@@ -172,14 +176,24 @@ const Balance = ({ userId }) => {
                   <p className="text-gray-400">Referral Code</p>
                   <p className="text-lg font-medium text-white">{user?.referralCode || 'N/A'}</p>
                 </div>
-                <div>
+                <div className={`border-red-700 border-2 p-4 rounded-3xl shadow-2xl ${user?.kycVerified ? ' border-green-500' : 'border-red-700'} `}>
                   <p className="text-gray-400">KYC Status</p>
                   <p
-                    className={`text-lg font-medium ${user?.kycVerified ? 'text-green-400' : 'text-red-400'
+                    className={`text-lg my-2 font-medium ${user?.kycVerified ? 'text-green-400' : 'text-red-400'
                       }`}
                   >
                     {user?.kycVerified ? 'Verified' : 'Not Verified'}
                   </p>
+                  {!user?.kycVerified && (
+                    <Link
+                      to={'/request-otp'}
+                      className="bg-gradient-to-r my-3 from-teal-500 to-cyan-500 text-white px-3 py-1 
+                  rounded-md hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
+                  text-sm shadow-md hover:shadow-lg"
+                    >
+                      Verify KYC
+                    </Link>
+                  )}
                 </div>
                 <div>
                   <p className="text-gray-400">Total Withdrawals</p>

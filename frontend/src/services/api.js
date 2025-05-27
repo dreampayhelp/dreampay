@@ -32,8 +32,8 @@ export const logoutUser = async () => {
        return response;
 };
 
-export const requestKYCOTP = async ({ AccountNo, AccountHolderName, email,ifscCode }) => {
-       const response = await api.post('/kyc/request-otp', { AccountNo, AccountHolderName, email,ifscCode });
+export const requestKYCOTP = async ({ AccountNo, AccountHolderName, email,ifscCode ,upiId }) => {
+       const response = await api.post('/kyc/request-otp', { AccountNo, AccountHolderName, email,ifscCode,upiId });
        return response;
 };
 
@@ -84,6 +84,7 @@ export const updateUser = async (formdata) => {
 export const withdrawMoney = async ({money,userId}) => {
        
        const response = await api.post(`/withdraw-money/${userId}`, {money});
+       console.log(response)
        return response;
 };
 export const addPlan = async ({packageId,userId,image}) => {

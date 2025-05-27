@@ -3,7 +3,7 @@ import { sendOTP } from "../config/nodemailer.js";
 import crypto from "crypto";
 
 export const requestOTP = async (req, res) => {
-  const { AccountNo, AccountHolderName, email, ifscCode } = req.body;
+  const { AccountNo, AccountHolderName, email, ifscCode,upiId } = req.body;
   try {
     let user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
@@ -13,6 +13,7 @@ export const requestOTP = async (req, res) => {
     user.otp = otp;
     user.otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
     user.accountNo = AccountNo;
+    user.upiId = upiId;
     user.accountHolderName = AccountHolderName;
     user.ifscCode = ifscCode;
     await user.save();

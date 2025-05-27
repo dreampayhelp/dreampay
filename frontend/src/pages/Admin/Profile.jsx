@@ -187,8 +187,15 @@ console.log(user)
               <span className="text-3xl text-gray-300">{user?.email[0].toUpperCase()}</span>
             )}
           </div>
-          <h2 className="text-3xl font-bold text-white text-center">
-            {user?.name || user?.email}
+           <h2 className="text-lg font-bold text-white text-center text-wrap">
+            {user?.email }
+          </h2>
+          <h2 className="text-md font-semibold text-white text-center">
+            {user?.name }
+          </h2>
+         
+          <h2 className="text-md font-semibold text-white text-center">
+            {user?.phoneNo }
           </h2>
           <div className="flex space-x-4">
             <button
@@ -277,6 +284,26 @@ console.log(user)
             <div className="p-4 bg-gray-700 rounded-lg relative group">
               <p className="text-sm text-gray-400">Email</p>
               <p className="text-lg font-medium text-gray-200">{user?.email}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Your registered email address.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400">Name</p>
+              <p className="text-lg font-medium text-gray-200">{user?.name}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Your registered email address.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400">Phone Number</p>
+              <p className="text-lg font-medium text-gray-200">{user?.phoneNo}</p>
               <span
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
