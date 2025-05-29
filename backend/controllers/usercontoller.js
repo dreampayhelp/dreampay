@@ -73,8 +73,7 @@ export const register = async (req, res) => {
               await sendOTP({ email: user?.email, subject: "Welcome to Our Platform!", html: welcomeEmailContent });
               res.json({ success: true, msg: "User registered successfully" });
        } catch (error) {
-              console.log(error)
-              res.json({ msg: "Server Error" ,error:error.message});
+              res.json({ msg: "Server Error", error: error.message });
        }
 };
 
@@ -83,7 +82,6 @@ export const login = async (req, res) => {
        try {
               const user = await User.findOne({ email });
               if (!user) throw new Error("Invalid Credentials");
-              // console.log(user)
               const isMatch = await bcrypt.compare(password, user.password);
               if (!isMatch) throw new Error("Invalid Credentials");
               const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -93,7 +91,7 @@ export const login = async (req, res) => {
                      secure: true,
                      maxAge: 24 * 60 * 60 * 1000 // 1 day
               });
-              if (user.email == 'kumanjeet779@gmail.com' || user.email == 'dreampay.help@gmail.com' ) {
+              if (user.email == 'kumanjeet779@gmail.com' || user.email == 'dreampay.help@gmail.com') {
                      res.json({ success: true, msg: "Login successful", admin: true });
               } else {
                      res.json({ success: true, msg: "Login successful", success: true });
@@ -112,25 +110,16 @@ export const getUserbyId = async (req, res) => {
        try {
               const { id } = req.query
               const user = await User.findById(id);
+              await user.populate('paymentScreenshots')
+              await user.populate('plans')
               if (!user) {
                      throw new Error("user not fount")
               }
-              res.json({ success: true, user, success: true });
+              res.json({ success: true, user,});
        } catch (error) {
               res.json({ msg: "Server Error" });
        }
 };
-export const getReferrals = async (req, res) => {
-       try {
-              const user = await User.findById(req.user.userId);
-              const referrals = await User.find({ referredBy: user.referralCode });
-
-              res.json({ success: true, referrals, success: true });
-       } catch (error) {
-              res.json({ msg: "Server Error" });
-       }
-};
-
 export const getProfile = async (req, res) => {
        try {
               const user = await User.findById(req.user.userId);
@@ -141,6 +130,18 @@ export const getProfile = async (req, res) => {
               res.json({ msg: "Server Error" });
        }
 };
+export const getReferrals = async (req, res) => {
+       try {
+              const user = await User.findById(req.user.userId);
+              const referrals = await User.find({ referredBy: user.referralCode });
+
+              res.json({ success: true, referrals, });
+       } catch (error) {
+              res.json({ msg: "Server Error" });
+       }
+};
+
+
 export const deposit = async (req, res) => {
        const { amount } = req.body;
        try {
@@ -158,7 +159,6 @@ export const deposit = async (req, res) => {
 //        const { amount } = req.body;
 //        try {
 //               const user = await User.findById(req.user.userId);
-//               console.log(user)
 //               if (user.plans.length < 1) {
 //                      throw new Error("For first withdraw You have buy to at least one package")
 //               }

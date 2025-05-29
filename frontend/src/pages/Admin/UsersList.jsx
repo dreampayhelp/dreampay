@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUsers } from "../../services/api";
 import toast from "react-hot-toast";
 
 const UsersList = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -12,13 +18,13 @@ const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: "name", direction: "asc" });
   const navigate = useNavigate();
-  const { user,isAdmin } = useSelector((st) => st.auth); // Assume auth store has user
+  const { user, isAdmin } = useSelector((st) => st.auth); // Assume auth store has user
   const usersPerPage = 10;
 
   useEffect(() => {
-   if(!isAdmin){
-    navigate("/")
-   }
+    if (!isAdmin) {
+      navigate("/")
+    }
 
     fetchUsers();
     return () => {
@@ -60,13 +66,13 @@ const UsersList = () => {
         ? aValue === bValue
           ? 0
           : aValue
-          ? -1
-          : 1
+            ? -1
+            : 1
         : aValue === bValue
-        ? 0
-        : aValue
-        ? 1
-        : -1;
+          ? 0
+          : aValue
+            ? 1
+            : -1;
     }
     return sortConfig.direction === "asc"
       ? aValue.localeCompare(bValue)
@@ -75,8 +81,8 @@ const UsersList = () => {
 
   const filteredUsers = sortedUsers.filter(
     (user) =>
-      user.email.toLowerCase().includes(search.toLowerCase()) ||
-      user.name?.toLowerCase().includes(search.toLowerCase())
+      user?.email.toLowerCase().includes(search.toLowerCase()) ||
+      user?.name?.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
@@ -193,7 +199,7 @@ const UsersList = () => {
         </div>
 
         {/* Search Bar and Refresh */}
-        <div className="p-6 flex flex-col sm:flex-row gap-4"  data-aos-delay="100">
+        <div className="p-6 flex flex-col sm:flex-row gap-4" data-aos-delay="100">
           <input
             type="text"
             placeholder="Search by name or email..."
@@ -217,8 +223,8 @@ const UsersList = () => {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto px-6 pb-6"  data-aos-delay="200">
-          <table className="w-full border-\">
+        <div className="overflow-x-auto px-6 pb-6" data-aos-delay="200">
+          <table className="w-full ">
             <thead>
               <tr className="bg-gray-700 text-gray-300">
                 {[
@@ -231,9 +237,8 @@ const UsersList = () => {
                 ].map((col) => (
                   <th
                     key={col.label}
-                    className={`p-3 text-left font-semibold cursor-${
-                      col.key ? "pointer" : "default"
-                    }`}
+                    className={`p-3 text-left font-semibold cursor-${col.key ? "pointer" : "default"
+                      }`}
                     onClick={() => col.key && handleSort(col.key)}
                   >
                     <div className="flex items-center">
@@ -252,14 +257,14 @@ const UsersList = () => {
               {paginatedUsers.length > 0 ? (
                 paginatedUsers.map((user) => (
                   <tr
-                    key={user._id}
+                    key={user?._id}
                     className="border-y hover:bg-gray-600 transition-colors"
                   >
-                    <td className="p-3 whitespace-nowrap text-gray-200">{user.name || "N/A"}</td>
-                    <td className="p-3 break-words max-w-xs text-gray-200">{user.email}</td>
-                    <td className="p-3 text-gray-200">₹{user.balance.toLocaleString()}</td>
+                    <td className="p-3 whitespace-nowrap text-gray-200">{name || "N/A"}</td>
+                    <td className="p-3 break-words max-w-xs text-gray-200">{user?.email}</td>
+                    <td className="p-3 text-gray-200">₹{user?.balance.toLocaleString()}</td>
                     <td className="p-3 relative group">
-                      {user.kycVerified ? (
+                      {user?.kycVerified ? (
                         <span className="text-green-400">✅ Verified</span>
                       ) : (
                         <span className="text-red-400">❌ Not Verified</span>
@@ -273,7 +278,7 @@ const UsersList = () => {
                     </td>
                     <td className="p-3 relative group">
                       <button
-                        onClick={() => navigate(`/admin/user/${user._id}`)}
+                        onClick={() => navigate(`/admin/user/${user?._id}`)}
                         className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
                         px-4 py-2 rounded-lg hover:from-indigo-700 hover:to-purple-700 
                         transition-all duration-300 focus:outline-none focus:ring-4 
@@ -282,10 +287,10 @@ const UsersList = () => {
                       >
                         Update
                       </button>
-                    
+
                     </td>
                     <td className="p-3 relative group">
-                      <Link to={`/profile/${user._id}`}>
+                      <Link to={`/profile/${user?._id}`}>
                         <button
                           className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white 
                           px-4 py-2 rounded-lg hover:from-teal-600 hover:to-cyan-600 
@@ -296,7 +301,7 @@ const UsersList = () => {
                           See Details
                         </button>
                       </Link>
-                    
+
                     </td>
                   </tr>
                 ))
@@ -326,7 +331,7 @@ const UsersList = () => {
         {totalPages > 1 && (
           <div
             className="p-6 flex justify-between items-center"
-            
+
             data-aos-delay="300"
           >
             <button

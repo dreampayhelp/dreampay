@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 const contactUs = async (data) => {
        // Placeholder API; replace with actual service
@@ -11,6 +12,12 @@ const contactUs = async (data) => {
 };
 
 const ContactUs = () => {
+        const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
        const [formData, setFormData] = useState({
               name: '',
               email: '',

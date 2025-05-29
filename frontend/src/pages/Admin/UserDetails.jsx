@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserById, updateUser, VerifySst } from "../../services/api";
 import toast from "react-hot-toast";
+import { userData } from "../../store/authSlice";
 
 const UserDetails = () => {
+       const location = useLocation();
+
+       useEffect(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+       }, [location.pathname]);
+
        const { userId } = useParams();
        const navigate = useNavigate();
+       const dispatch = useDispatch();
        const { user: authUser } = useSelector((st) => st.auth);
        const [user, setUser] = useState(null);
        const [packageId, setPkgId] = useState("");
@@ -31,12 +39,14 @@ const UserDetails = () => {
                      setError("");
                      const res = await getUserById({ id: userId });
                      if (res.data.success) {
-                            setUser(res.data.user);
+                            setUser(res?.data?.user)
+                            dispatch(userData(res.data.user));
+
                             setFormData({
-                                   name: res.data.user.name || "",
-                                   email: res.data.user.email,
-                                   balance: res.data.user.balance.toString(),
-                                   kycVerified: res.data.user.kycVerified,
+                                   name: res.data?.user?.name || "",
+                                   email: res.data?.user?.email,
+                                   balance: res.data?.user?.balance.toString(),
+                                   kycVerified: res.data?.user?.kycVerified,
                                    userId,
                             });
                      } else {
@@ -88,8 +98,8 @@ const UserDetails = () => {
               try {
                      setVerifyLoading(true);
                      const res = await VerifySst({ userId, packageId, sstId });
-                     console.log(res)
                      if (res.data.success) {
+
                             toast.success("Verified");
                             setPkgId("");
                             setSstId("");
@@ -98,7 +108,6 @@ const UserDetails = () => {
                             toast.error(res.data.message);
                      }
               } catch (error) {
-                     console.log()
                      toast.error(error.response?.data?.message || "Verification failed");
               } finally {
                      setVerifyLoading(false);
@@ -223,7 +232,7 @@ const UserDetails = () => {
                                                                                     <span className="font-medium">Transaction ID:</span> {payment?._id}
                                                                              </p>
                                                                              <p className="text-sm text-gray-300">
-                                                                                    <span className="font-medium">packageId ID:</span> {payment?.packageId }
+                                                                                    <span className="font-medium">packageId ID:</span> {payment?.packageId}
                                                                              </p>
                                                                              <p className="text-sm text-gray-300">
                                                                                     <span className="font-medium">verification ID:</span> {payment?.verifiedPlan ? 'true' : 'false'}

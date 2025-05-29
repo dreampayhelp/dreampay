@@ -1,10 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import pan from '../assets/pan.jpg';
 import tan from '../assets/tan.jpg';
 import registration from '../assets/Registration.jpg';
 const About = () => {
+   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (

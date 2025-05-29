@@ -143,7 +143,6 @@ export const uploadSst = async (req, res) => {
 export const VerifySst = async (req, res) => {
   try {
     const { userId, packageId, sstId } = req.body;
-    console.log(userId)
     const user = await User.findById(userId);
     if (!userId || !packageId || !sstId) {
       throw new Error("packageId required");
@@ -176,6 +175,7 @@ export const VerifySst = async (req, res) => {
         if (referrer.referrals >= nextLevelTarget) {
           let levelBonus = referrer.referrals * 50; // 100% of referral earnings
           referrer.balance += levelBonus;
+          referrer.levelBonus += levelBonus;
           referrer.referralBonus += levelBonus;
           referrer.level += 1;
         }
@@ -187,7 +187,7 @@ export const VerifySst = async (req, res) => {
     const plan = await Plan.create({
       packageAmount: selectedPackage.amount,
       dailyIncome: selectedPackage.dailyIncome,
-      totalIncome: selectedPackage.dailyIncome * 24,
+      totalIncome: selectedPackage.dailyIncome * 20,
       createdAt: new Date(),
       owner: user._id,
       sstId: sst._id,

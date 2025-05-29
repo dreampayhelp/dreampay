@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   balance: { type: Number, default: 0 },
   referrals: { type: Number, default: 0 }, // Tracks referral count
   referralBonus: { type: Number, default: 0 }, // Tracks referral earnings
+  levelBonus: { type: Number, default: 0 }, // Tracks referral earnings
   level: { type: Number, default: 1 }, // Default level is 1
   accountNo: { type: String, },
   upiId: { type: String, },

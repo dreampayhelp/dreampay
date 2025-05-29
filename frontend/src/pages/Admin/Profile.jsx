@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getUserById, updateUser } from '../../services/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
 
 const Profile = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -16,8 +22,8 @@ const Profile = () => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: "",
-    userId : ""
-    
+    userId: ""
+
   });
   const fetchUser = async () => {
     try {
@@ -46,16 +52,16 @@ const Profile = () => {
   }, [id]);
 
   const handleKycVerification = () => {
-    
-      navigate('/request-otp');
-    
+
+    navigate('/request-otp');
+
   };
   const handleSaveName = async () => {
     if (!editName.trim()) {
       toast.error('Name cannot be empty');
       return;
     }
-    formData.name=editName
+    formData.name = editName
     formData.userId = id
     try {
       const res = await updateUser({ ...formData });
@@ -70,7 +76,6 @@ const Profile = () => {
     }
     setShowPopup(false);
   };
-console.log(user)
   if (loading) {
     return (
       <div
@@ -184,18 +189,20 @@ console.log(user)
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-3xl text-gray-300">{user?.email[0].toUpperCase()}</span>
+              <span className="text-3xl text-gray-300o">{user?.email[0].toUpperCase()}</span>
             )}
           </div>
-           <h2 className="text-lg font-bold text-white text-center text-wrap">
-            {user?.email }
-          </h2>
+          <div className="overflow-auto">
+            <h2 className="text-lg font-bold text-white text-center ">
+              {user?.email}
+            </h2>
+          </div>
           <h2 className="text-md font-semibold text-white text-center">
-            {user?.name }
+            {user?.name}
           </h2>
-         
+
           <h2 className="text-md font-semibold text-white text-center">
-            {user?.phoneNo }
+            {user?.phoneNo}
           </h2>
           <div className="flex space-x-4">
             <button
@@ -259,6 +266,12 @@ console.log(user)
               <p className="text-lg font-medium text-indigo-400">{user?.plans?.length}</p>
             </div>
             <div className="text-center">
+              <p className="text-gray-300">Total Balance</p>
+              <p className="text-lg font-medium text-indigo-400">
+                ₹{user?.balance}
+              </p>
+            </div>
+            <div className="text-center">
               <p className="text-gray-300">Total Withdrawals</p>
               <p className="text-lg font-medium text-indigo-400">
                 ₹{user?.withdrawMoney?.reduce((sum, w) => sum + w.money, 0).toLocaleString()}
@@ -283,7 +296,7 @@ console.log(user)
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 bg-gray-700 rounded-lg relative group">
               <p className="text-sm text-gray-400">Email</p>
-              <p className="text-lg font-medium text-gray-200">{user?.email}</p>
+              <p className="text-lg font-medium text-gray-200 overflow-auto">{user?.email}</p>
               <span
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
@@ -312,7 +325,7 @@ console.log(user)
               </span>
             </div>
             <div className="p-4 bg-gray-700 rounded-lg relative group">
-              <p className="text-sm text-gray-400">Balance</p>
+              <p className="text-sm text-gray-400">Total Balance</p>
               <p className="text-lg font-medium text-gray-200">
                 ₹{user?.balance?.toLocaleString()}
               </p>
@@ -354,6 +367,46 @@ console.log(user)
             <div className="p-4 bg-gray-700 rounded-lg relative group">
               <p className="text-sm text-gray-400">Referral Code</p>
               <p className="text-lg font-medium text-gray-200">{user?.referralCode}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Share this code to earn referral bonuses.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400">Account Holder Name</p>
+              <p className="text-lg font-medium text-gray-200">{user?.accountHolderName}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Share this code to earn referral bonuses.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400">Account No.</p>
+              <p className="text-lg font-medium text-gray-200">{user?.accountNo}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Share this code to earn referral bonuses.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400">Bank Account IFSC Code</p>
+              <p className="text-lg font-medium text-gray-200">{user?.ifscCode}</p>
+              <span
+                className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
+                text-xs rounded p-2 -mt-10 w-48"
+              >
+                Share this code to earn referral bonuses.
+              </span>
+            </div>
+            <div className="p-4 bg-gray-700 rounded-lg relative group">
+              <p className="text-sm text-gray-400"> Account UPI Id</p>
+              <p className="text-lg font-medium text-gray-200">{user?.upiId}</p>
               <span
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"

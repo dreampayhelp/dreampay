@@ -50,7 +50,7 @@ const D3 = () => {
                                                  Join a plan to start earning!
                                           </p>
                                           <Link
-                                                 to="/#packages"
+                                                 to="/invest"
                                                  className="block w-full bg-indigo-600 text-white text-sm py-2 rounded-md hover:bg-indigo-700 transition-colors text-center"
                                           >
                                                  View Plans
@@ -86,9 +86,9 @@ const D3 = () => {
                                    </div>
                             ) : (
                                    <div>
-                                          {Array.isArray(user?.plans) && user.plans.length > 0 ? (
+                                          {Array.isArray(user?.plans) && user?.plans?.length > 0 ? (
                                                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                                        {user.plans.map((plan, idx) => (
+                                                        {user?.plans?.map((plan, idx) => (
                                                                <div
                                                                       key={idx}
                                                                       className="border border-gray-600 rounded-2xl p-6 bg-gray-700/80 backdrop-blur-sm shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-500 flex flex-col items-center"
@@ -119,7 +119,7 @@ const D3 = () => {
                                                  >
                                                         <p className="text-gray-400 text-lg">
                                                                No plans yet. Explore our{' '}
-                                                               <Link to="/#packages" className="text-indigo-400 hover:underline font-medium">
+                                                               <Link to="/invest" className="text-indigo-400 hover:underline font-medium">
                                                                       investment packages
                                                                </Link>
                                                                !

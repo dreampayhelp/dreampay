@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getProfile, loginUser } from '../services/api';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login, userData } from '../store/authSlice';
 import toast from 'react-hot-toast';
 
 export default function Login() {
+   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,7 +28,7 @@ export default function Login() {
         navigate('/login');
         toast.error('Session expired. Please log in again.');
       } else {
-        toast.error('Failed to fetch profile. Please try again.');
+        toast.error('Failed to fetch profile Please try again.');
       }
     }
   };

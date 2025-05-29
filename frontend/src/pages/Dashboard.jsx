@@ -93,12 +93,11 @@ export default function Dashboard() {
     if (referralCount >= 5) return 60;
     return Math.min(referralCount * 10, 100);
   };
-console.log(user)
   return (
     <div className="min-h-screen bg-gray-900 mt-16 py-16 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
       {!user?.kycVerified && (
         <div className="absolute top-[23px] w-[100vw] overflow-hidden">
-          <div 
+          <div
             to={"/re"}
             className="inline-block border-red-500 text-red-400  px-4 py-2  whitespace-nowrap animate-slide rounded-3xl"
           >
@@ -188,6 +187,67 @@ console.log(user)
             {/* Overview Section */}
             <D2 profile={profile} level={level} progress={progress} referrals={referrals} />
 
+            {/* Referrals */}
+            <div
+              className="bg-gray-800 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
+                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
+              style={{ animationDelay: '0.2s' }}
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
+                Your Referrals
+              </h2>
+              {referrals?.referrals?.length > 0 ? (
+                <ul className="space-y-4 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-gray-700 pr-2">
+                  {referrals.referrals.map((ref, idx) => (
+                    <li
+                      key={ref._id}
+                      className="flex justify-between items-center border-b border-gray-600 py-4 
+                        text-gray-300 hover:bg-gray-700 transition-colors duration-300 rounded-lg px-2 
+                        animate-fade-in-up"
+                      style={{ animationDelay: `${0.1 * idx}s` }}
+                    >
+                      <span className="font-medium text-lg text-white">{ref.name}</span>
+                      <span className="text-sm text-gray-400 font-mono bg-gray-600 px-2 py-1 rounded">
+                        {ref._id.slice(-6)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400 text-center text-lg">
+                  No referrals yet. Invite friends to earn bonuses!
+                </p>
+              )}
+            </div>
+            {/* Recent Transactions */}
+            <div
+              className="bg-gray-800 my-10 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
+                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
+              style={{ animationDelay: '0.4s' }}
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
+                Recent Transactions
+              </h2>
+              {user?.paymentScreenshots?.length || user?.withdrawMoney?.length ? (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {user?.paymentScreenshots?.map((item, idx) => (
+                    <D1 transaction={item} deposite={true} key={`deposit-${idx}`} />
+                  ))}
+                  {user?.withdrawMoney?.map((item, idx) => (
+                    <D1 transaction={item} deposite={false} key={`withdraw-${idx}`} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-400 text-center text-lg">
+                  No recent transactions yet.
+                </p>
+              )}
+            </div>
+
             {/* Referrals and Transactions */}
             <div className="space-y-16 my-16">
               {/* Your Plans */}
@@ -202,7 +262,7 @@ console.log(user)
                 </h2>
                 {user?.plans?.length ? (
                   <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {user.plans.map((item, idx) => (
+                    {user?.plans?.map((item, idx) => (
                       <div
                         key={idx}
                         className="border border-gray-600 rounded-2xl p-6 bg-gray-700 shadow-sm 
@@ -231,7 +291,7 @@ console.log(user)
                 ) : (
                   <p className="text-gray-400 text-center text-lg">
                     No plans yet. Explore our{' '}
-                    <Link to="/#packages" className="text-indigo-400 hover:underline font-medium">
+                    <Link to="/invest" className="text-indigo-400 hover:underline font-medium">
                       investment packages
                     </Link>
                     !
@@ -239,67 +299,7 @@ console.log(user)
                 )}
               </div>
 
-              {/* Referrals */}
-              <div
-                className="bg-gray-800 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
-                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: '0.2s' }}
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
-                  Your Referrals
-                </h2>
-                {referrals?.referrals?.length > 0 ? (
-                  <ul className="space-y-4 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-gray-700 pr-2">
-                    {referrals.referrals.map((ref, idx) => (
-                      <li
-                        key={ref._id}
-                        className="flex justify-between items-center border-b border-gray-600 py-4 
-                        text-gray-300 hover:bg-gray-700 transition-colors duration-300 rounded-lg px-2 
-                        animate-fade-in-up"
-                        style={{ animationDelay: `${0.1 * idx}s` }}
-                      >
-                        <span className="font-medium text-lg text-white">{ref.name}</span>
-                        <span className="text-sm text-gray-400 font-mono bg-gray-600 px-2 py-1 rounded">
-                          {ref._id.slice(-6)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-400 text-center text-lg">
-                    No referrals yet. Invite friends to earn bonuses!
-                  </p>
-                )}
-              </div>
 
-              {/* Recent Transactions */}
-              <div
-                className="bg-gray-800 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
-                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: '0.4s' }}
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
-                  Recent Transactions
-                </h2>
-                {user?.paymentScreenshots?.length || user?.withdrawMoney?.length ? (
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {user?.paymentScreenshots?.map((item, idx) => (
-                      <D1 transaction={item} deposite={true} key={`deposit-${idx}`} />
-                    ))}
-                    {user?.withdrawMoney?.map((item, idx) => (
-                      <D1 transaction={item} deposite={false} key={`withdraw-${idx}`} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-400 text-center text-lg">
-                    No recent transactions yet.
-                  </p>
-                )}
-              </div>
             </div>
 
             {/* Investment Packages */}

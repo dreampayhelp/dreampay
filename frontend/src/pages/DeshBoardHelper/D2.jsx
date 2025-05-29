@@ -12,7 +12,7 @@ const D2 = ({ profile, level, progress, referrals }) => {
     const message = `🌟 *Join the Dream Pay Revolution!* 🌟\n\n` +
       `Unlock *passive income* with Dream Pay! 💰\n\n` +
       `*Your Referral Link*: ${referralLink}\n` +
-      `*Referral Code*: *${profile.referralCode}*\n\n` +
+      `*Referral Code*: *${profile?.referralCode}*\n\n` +
       `🎉 *Bonuses Await!* 🎉\n` +
       `- Get ₹50 just for signing up!\n` +
       `- Earn an extra ₹50 by using my referral code!\n\n` +
@@ -21,9 +21,43 @@ const D2 = ({ profile, level, progress, referrals }) => {
       `Use the link and code above when registering.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
+//   const openWhatsapp = () => {
+//   // const referralLink = "https://example.com/signup"; // Replace with your actual link
+//   // const profile = { referralCode:profile.referralCode }; // Replace with your actual data
+
+//   const message = `🌟 *Join the Dream Pay Revolution!* 🌟\n\n` +
+//     `Unlock *passive income* with Dream Pay! 💰\n\n` +
+//     `*Your Referral Link*: ${referralLink}\n` +
+//     `*Referral Code*: *${profile.referralCode}*\n\n` +
+//     `🎉 *Bonuses Await!* 🎉\n` +
+//     `- Get ₹50 just for signing up!\n` +
+//     `- Earn an extra ₹50 by using my referral code!\n\n` +
+//     `---\n` +
+//     `*Sign up now* and start earning today! ➡️\n` +
+//     `Use the link and code above when registering.`;
+
+//   if (navigator.share) {
+//     navigator.share({
+//       title: 'Dream Pay Invitation',
+//       text: message,
+//       url: referralLink,
+//     })
+//     .then(() => console.log('Shared successfully'))
+//     .catch(err => console.error('Error sharing:', err));
+//   } else {
+//     // Fallback: open WhatsApp with pre-filled message
+//     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+//     window.open(whatsappUrl, '_blank');
+//   }
+// };
+
   const copyReferralCode = () => {
     navigator.clipboard.writeText(profile?.referralCode || '');
     toast.success('Referral code copied to clipboard!');
+  };
+  const copyReferralLink = () => {
+    navigator.clipboard.writeText(referralLink || '');
+    toast.success('Referral link copied to clipboard!');
   };
 
   useEffect(() => {
@@ -76,7 +110,7 @@ const D2 = ({ profile, level, progress, referrals }) => {
         </Link>
 
         {/* Referrals Income */}
-        <Link  to={`/balance/${profile?._id}`}>
+        <Link to={`/balance/${profile?._id}`}>
           <div
             className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
           hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
@@ -95,6 +129,26 @@ const D2 = ({ profile, level, progress, referrals }) => {
             </div>
           </div>
         </Link>
+        <Link to={`/balance/${profile?._id}`}>
+          <div
+            className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
+          hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
+          transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
+              <span className="text-indigo-400">💰</span> Referrals Bonus
+            </h2>
+            <div
+              className="text-xl md:text-2xl font-medium text-white hover:text-yellow-400 
+            transition-colors duration-300"
+            >
+              ₹{profile?.referralBonus}
+            </div>
+          </div>
+        </Link>
+
 
         {/* Transactions */}
         <Link to={`/balance/${profile?._id}`}>
@@ -142,58 +196,25 @@ const D2 = ({ profile, level, progress, referrals }) => {
             {progress}% to Level {level < 5 ? level + 1 : level}
           </p>
         </div>
-
-        {/* Referral Link */}
-        <div
-          className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
+        <Link to={`/balance/${profile?._id}`}>
+          <div
+            className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
           hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
           transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
-          data-aos="fade-up"
-          data-aos-delay="500"
-        >
-          <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
-            <span className="text-indigo-400">🔗</span> Referral Link
-          </h2>
-          <p className="text-sm text-gray-300 break-all mb-3 font-mono bg-indigo-900/50 px-2 py-1 
-          rounded group-hover:bg-indigo-900/70 transition-colors duration-300">
-            {referralLink}
-          </p>
-          <button
-            onClick={openWhatsapp}
-            className="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 
-            rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 
-            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
-            focus:ring-green-400 focus:ring-offset-2"
+            data-aos="fade-up"
+            data-aos-delay="200"
           >
-            Share on WhatsApp
-          </button>
-        </div>
-
-        {/* Referral Code */}
-        <div
-          className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
-          hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
-          transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
-          data-aos="fade-up"
-          data-aos-delay="600"
-        >
-          <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
-            <span className="text-indigo-400">📋</span> Referral Code
-          </h2>
-          <p className="text-lg md:text-xl font-medium text-green-400 mb-3 group-hover:text-green-300 transition-colors duration-300">
-            {profile?.referralCode || 'N/A'}
-          </p>
-          <button
-            onClick={copyReferralCode}
-            className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-5 py-2 
-            rounded-full hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
-            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
-            focus:ring-teal-400 focus:ring-offset-2"
-          >
-            Copy Code
-          </button>
-        </div>
-
+            <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
+              <span className="text-indigo-400">💰</span> Level Income
+            </h2>
+            <div
+              className="text-xl md:text-2xl font-medium text-white hover:text-yellow-400 
+            transition-colors duration-300"
+            >
+              ₹{profile?.referralBonus}
+            </div>
+          </div>
+        </Link>
         {/* Verification */}
         <div
           className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
@@ -228,6 +249,69 @@ const D2 = ({ profile, level, progress, referrals }) => {
             </Link>
           )}
         </div>
+        {/* Referral Link */}
+        <div
+          className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
+          hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
+          transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
+          data-aos="fade-up"
+          data-aos-delay="500"
+        >
+          <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
+            <span className="text-indigo-400">🔗</span> Referral Link
+          </h2>
+          <p className="text-sm text-gray-300 break-all mb-3 font-mono bg-indigo-900/50 px-2 py-1 
+          rounded group-hover:bg-indigo-900/70 transition-colors duration-300">
+            {referralLink}
+          </p>
+          <div className="flex justify-between">
+            <button
+              onClick={openWhatsapp}
+              className="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 
+            rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 
+            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
+            focus:ring-green-400 focus:ring-offset-2"
+            >
+              Share
+            </button>
+            <button
+              onClick={copyReferralLink}
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-5 py-2 
+            rounded-full hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
+            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
+            focus:ring-teal-400 focus:ring-offset-2"
+            >
+              Copy 
+            </button>
+          </div>
+        </div>
+
+        {/* Referral Code */}
+        <div
+          className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
+          hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
+          transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
+          <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
+            <span className="text-indigo-400">📋</span> Referral Code
+          </h2>
+          <p className="text-lg md:text-xl font-medium text-green-400 mb-3 group-hover:text-green-300 transition-colors duration-300">
+            {profile?.referralCode || 'N/A'}
+          </p>
+          <button
+            onClick={copyReferralCode}
+            className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-5 py-2 
+            rounded-full hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
+            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
+            focus:ring-teal-400 focus:ring-offset-2"
+          >
+            Copy Code
+          </button>
+        </div>
+
+
       </div>
 
       {/* Custom CSS for animations */}

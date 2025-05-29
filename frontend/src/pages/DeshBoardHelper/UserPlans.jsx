@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import StreakTracker from "./StreakTracker";
 
 const UserPlans = () => {
+   const location = useLocation();
+
+  useEffect
+  (() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const { user } = useSelector((st) => st.auth);
   const { id } = useParams();
   const plan = user?.plans?.find((p,idx) => idx == id); // Filter by plan ID
   const [showStreak, setShowStreak] = useState(false);
+  // console.log(plan)
   return (
     <div
       className="min-h-screen bg-gray-900 py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
@@ -48,9 +56,9 @@ const UserPlans = () => {
             Your Investment Plans
           </h2>
           <p className="text-gray-300 text-center">
-            You have {user.plans.length} active plan{user.plans.length !== 1 ? 's' : ''} with a total 
+            You have {user?.plans?.length} active plan{user?.plans?.length !== 1 ? 's' : ''} with a total 
             investment of ₹
-            {user.plans.reduce((sum, p) => sum + p.packageAmount, 0).toLocaleString()}.
+            {user?.plans?.reduce((sum, p) => sum + p.packageAmount, 0).toLocaleString()}.
           </p>
           <div className="mt-4 flex justify-center">
             <Link
@@ -67,12 +75,12 @@ const UserPlans = () => {
 
         {/* Plan Details Section */}
         <div
-          className="bg-gray-800 p-6 rounded-2xl shadow-xl border border-indigo-600/50 
-          transform hover:shadow-indigo-500/50 transition-all duration-300 animate-fade-in-up"
+          className="bg-gray-800 p-2 rounded-2xl shadow-xl 
+           hover:shadow-indigo-500/50 transition-all duration-300 animate-fade-in-up"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          <h2 className="text-2xl font-bold text-white my-6 text-center">
             📜 Plan Details
           </h2>
 
@@ -154,21 +162,10 @@ const UserPlans = () => {
                     The expected or remaining duration of the plan.
                   </span>
                 </p>
-                <p className="text-gray-300 mb-4 relative group">
-                  📈 Expected Returns:{' '}
-                  <span className="text-teal-400 font-medium">
-                    ₹{(plan.dailyIncome * (plan.durationDays||20)).toLocaleString()}
-                  </span>
-                  <span
-                    className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
-                    text-xs rounded p-2 -mt-10 ml-2 w-48"
-                  >
-                    Projected total earnings based on daily income and duration.
-                  </span>
-                </p>
+              
                 <button
                   onClick={() => setShowStreak((prev) => !prev)}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
+                  className="w-full mt-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
                   py-2 px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 
                   transition-all duration-300 focus:outline-none focus:ring-4 
                   focus:ring-indigo-400 focus:ring-offset-2 font-semibold shadow-md 

@@ -17,17 +17,13 @@ export const completeTask = async (req, res) => {
               if (!plan) throw new Error("Plan doesn't exist anymore");
 
               const todayStr = await getNetworkUTCDate();
-              // console.log(todayStr)
               const yesterdayDate = new Date(todayStr);
-              // console.log(yesterdayDate)
               yesterdayDate.setDate(yesterdayDate.getDate() - 1);
               const yesterdayStr = yesterdayDate.toISOString().split("T")[0];
-              // console.log(yesterdayStr)
 
               const lastTaskStr = plan.lastTaskDate
                      ? plan.lastTaskDate.toISOString().split("T")[0]
                      : null;
-              // console.log(lastTaskStr)
 
               if (lastTaskStr === todayStr) {
                      throw new Error("Task already completed today!");
@@ -41,17 +37,18 @@ export const completeTask = async (req, res) => {
                      plan.dailyDeposit += 1;
               }
 
-              plan.lastTaskDate = new Date(); // store system time (OK, we validated already)
+              plan.lastTaskDate = todayStr; // store system time (OK, we validated already)
 
-              const bonusRewards = { 3: 10, 7: 50, 14: 150, 20: 500 };
-              if (bonusRewards[plan.streak]) {
-                     user.balance += bonusRewards[plan.streak];
-              }
+              // const bonusRewards = { 3: 10, 7: 50, 14: 150, 20: 500 };
+              // if (bonusRewards[plan.streak]) {
+              //        user.balance += bonusRewards[plan.streak];
+              // }
 
               if (plan.dailyDeposit <= 20) {
                      user.balance += plan.dailyIncome;
                      await user.save();
                      await plan.save();
+                     console.log(plan)
                      res.json({
                             message: "Task completed!",
                             streak: plan.streak,

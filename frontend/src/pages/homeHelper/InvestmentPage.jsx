@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const packages = [
   { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
   { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
@@ -14,6 +14,11 @@ const packages = [
 
 
 const InvestmentPackages = () => {
+ const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const handleJoinClick = (pkgId) => {

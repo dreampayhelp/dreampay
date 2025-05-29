@@ -69,13 +69,13 @@ const Footer = () => {
                                                  </a>
                                           </li>
 
-                                          <li class="text-gray-200 font-medium">
+                                          <li className="text-gray-200 font-medium">
                                                  Address:
-                                                 <ul class="ml-4 mt-2 space-y-1 text-gray-400">
-                                                        <li>Floor No.: <span class="font-normal">Ground Floor</span></li>
-                                                        <li>Building No./Flat No.: <span class="font-normal">Shop No. 1, Plot No. 9</span></li>
-                                                        <li>Name of Premises/Building: <span class="font-normal">Krishna Sagar CHS</span></li>
-                                                        <li>Road/Street: <span class="font-normal">Sector-26, Phase-2</span></li>
+                                                 <ul className="ml-4 mt-2 space-y-1 text-gray-400">
+                                                        <li>Floor No.: <span className="font-normal">Ground Floor</span></li>
+                                                        <li>Building No./Flat No.: <span className="font-normal">Shop No. 1, Plot No. 9</span></li>
+                                                        <li>Name of Premises/Building: <span className="font-normal">Krishna Sagar CHS</span></li>
+                                                        <li>Road/Street: <span className="font-normal">Sector-26, Phase-2</span></li>
 
                                                  </ul>
                                           </li>

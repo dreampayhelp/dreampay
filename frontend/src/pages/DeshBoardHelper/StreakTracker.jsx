@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import { completeStreak, getPlanById } from "../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const StreakTracker = ({ planId }) => {
-       const [streak, setStreak] = useState(0);
+       const location = useLocation();
+
+       useEffect(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+       }, [location.pathname]);
+
+       const [plan, setStreak] = useState();
        const [balance, setBalance] = useState(0);
        const [taskCompletedToday, setTaskCompletedToday] = useState(false);
        const [loading, setLoading] = useState(false);
@@ -16,7 +22,7 @@ const StreakTracker = ({ planId }) => {
        const fetchPlanData = async () => {
               try {
                      const data = await getPlanById({ planId });
-                     setStreak(data.data.plan.streak);
+                     setStreak(data.data.plan);
                      setTaskCompletedToday(data.data.plan.taskCompletedToday || false);
               } catch (error) {
                      const errorMessage =
@@ -28,15 +34,16 @@ const StreakTracker = ({ planId }) => {
 
        useEffect(() => {
               fetchPlanData();
-              setBalance(user.balance);
-       }, [planId, user.balance]);
-
+              setBalance(user?.balance);
+       }, [planId, user?.balance]);
+// console.log(plan)
        const completeTask = async () => {
               try {
                      setLoading(true);
                      setError("");
                      const res = await completeStreak({ planId });
                      if (res.data.success) {
+
                             await fetchPlanData();
                             setStreak(res.data.streak);
                             setBalance(res.data.balance);
@@ -65,12 +72,12 @@ const StreakTracker = ({ planId }) => {
 
        const refreshData = () => {
               fetchPlanData();
-              setBalance(user.balance);
+              setBalance(user?.balance);
               setError("");
        };
 
        // Calculate streak progress (e.g., for a 30-day milestone)
-       const streakProgress = Math.min((streak / 30) * 100, 100);
+       const streakProgress = Math.min((plan?.streak / 30) * 100, 100);
 
        return (
               <div
@@ -87,11 +94,14 @@ const StreakTracker = ({ planId }) => {
                                    Complete your daily task to maintain your streak and earn rewards. Each
                                    streak day boosts your balance!
                             </p>
+                            <p className="text-red-400 text-sm mb-4">
+                                  IF YOU DO NOT CONTINUE , STREAK START FROM <strong>1 DAY</strong>
+                            </p>
 
                             {/* Streak Display */}
                             <h2 className="text-xl font-bold text-white mb-2 relative group">
                                    🔥 Streak:{' '}
-                                   <span className="text-orange-400 animate-pulse">{streak} Days</span>
+                                   <span className="text-orange-400 animate-pulse">{plan?.streak} Days</span>
                                    <span
                                           className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
             text-xs rounded p-2 -mt-10 w-48"
@@ -110,16 +120,16 @@ const StreakTracker = ({ planId }) => {
                                           ></div>
                                    </div>
                                    <p className="text-gray-400 text-xs mt-1">
-                                          Progress to 30-day milestone: {streak}/20 days
+                                          Progress to 20-day milestone: {plan?.streak}/20 days
                                    </p>
                             </div>
 
                             {/* Balance Display */}
-                            <h2 className="text-xl font-bold text-white mb-4 relative group">
-                                   💰 Balance:{' '}
-                                   <span className="text-orange-400 animate-pulse">
-                                          ₹{balance.toLocaleString()}
-                                   </span>
+                            <h2 className="text-md font-bold text-white mb-4 relative group">
+                                   {/* Last Streak :{' '}
+                                   <span className="text-orange-400 animate-pulse text-sm">
+                                          {plan?.lastTaskDate?.toLocaleString().slice(0,10) || "NULL" }
+                                   </span> */}
                                    <span
                                           className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
             text-xs rounded p-2 -mt-10 w-48"
@@ -144,9 +154,9 @@ const StreakTracker = ({ planId }) => {
                                    {[7, 30, 100].map((milestone) => (
                                           <span
                                                  key={milestone}
-                                                 className={`text-xs font-medium px-2 py-1 rounded-full ${streak >= milestone
-                                                               ? "bg-green-900/50 text-green-400"
-                                                               : "bg-gray-700 text-gray-400"
+                                                 className={`text-xs font-medium px-2 py-1 rounded-full ${plan?.streak >= milestone
+                                                        ? "bg-green-900/50 text-green-400"
+                                                        : "bg-gray-700 text-gray-400"
                                                         }`}
                                           >
                                                  {milestone} Days

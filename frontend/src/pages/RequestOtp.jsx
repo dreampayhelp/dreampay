@@ -1,14 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { requestKYCOTP } from '../services/api';
 import toast from 'react-hot-toast';
 
 const RequestOTP = () => {
+   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: user.email,
+    email: user?.email,
     AccountNo: '',
     AccountHolderName: '',
     ifscCode: '',
@@ -53,11 +59,10 @@ const RequestOTP = () => {
     try {
       setLoading(true);
       const response = await requestKYCOTP(formData);
-      console.log(response)
       if (response.data.success) {
         setSuccess(response.data.message);
         toast.success("Otp sent");
-        navigate('/verify-otp', { state: { email: user.email } });
+        navigate('/verify-otp', { state: { email: user?.email } });
       } else {
         throw new Error(response.data.message || 'Failed to request OTP');
       }

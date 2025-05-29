@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link, useLocation } from 'react-router-dom';
 import { getUserById, withdrawMoney } from '../services/api';
 import toast from 'react-hot-toast';
+import D1 from './DeshBoardHelper/D1';
 
 const Balance = ({ userId }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [money, setMoney] = useState('');
@@ -67,8 +74,7 @@ const Balance = ({ userId }) => {
       if (amount < 200) {
         throw new Error('Minimum withdraw ₹200.');
       }
-      const res = await withdrawMoney({ userId: user._id, money: amount });
-      console.log(res)
+      const res = await withdrawMoney({ userId: user?._id, money: amount });
       if (res.data.success) {
         await fetchUser();
         setMoney('');
@@ -76,7 +82,6 @@ const Balance = ({ userId }) => {
         toast.success('Withdrawal request submitted successfully.');
         setConfirmWithdrawal(false);
       } else {
-        console.log(res)
         throw new Error(res.data.error);
       }
     } catch (error) {
@@ -95,6 +100,7 @@ const Balance = ({ userId }) => {
     setConfirmWithdrawal(false);
     setMoney('');
   };
+  // console.log(user)
   return (
     <div
       className="min-h-screen mt-20 flex flex-col items-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
@@ -213,11 +219,20 @@ const Balance = ({ userId }) => {
             >
               <h2 className="text-2xl font-semibold text-gray-200 mb-4">Balance Breakdown</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                <div>
-                  <p className="text-gray-400">Total Balance</p>
-                  <p className="text-2xl font-bold text-green-400">
-                    ₹{user?.balance?.toLocaleString() || '0'}
-                  </p>
+                <div className="flex gap-[60px]">
+                  <div>
+                    <p className="text-gray-400">Total Balance</p>
+                    <p className="text-xl font-bold text-green-400">
+                      ₹{user?.balance?.toLocaleString() || '0'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Total withdrawal</p>
+                    <p className="text-xl font-bold text-green-400">
+                      ₹{user?.withdrawMoney?.reduce((sum, w) => sum + w.money, 0) || '0'}
+
+                    </p>
+                  </div>
                 </div>
                 <div>
                   <p className="text-gray-400">Packages Income</p>
@@ -228,11 +243,36 @@ const Balance = ({ userId }) => {
                 <div>
                   <p className="text-gray-400">Referral Inome</p>
                   <p className="text-2xl font-bold text-green-400">
-                    ₹{(user?.referrals?.length * 50 || 0).toLocaleString()}
+                    ₹{(user?.referrals) * 50}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-400">Referral Bonus</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    ₹{(user?.referralBonus)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-400">Sign Up Bonus</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    ₹ 50
+                  </p>
+                </div>
+                {user?.referredBy?.length > 2 && <div>
+                  <p className="text-gray-400">Referred Bonus</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    ₹ 50
+                  </p>
+                </div>}
+                <div>
+                  <p className="text-gray-400">Level Inome</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    ₹{(user?.levelBonus)}
                   </p>
                 </div>
               </div>
             </div>
+
 
             {/* Withdraw Section */}
             <div
@@ -335,7 +375,31 @@ const Balance = ({ userId }) => {
                 Note: Funds will be credited within 24 hours of withdrawal request.
               </p>
             </div>
-
+            <div
+              className="bg-gray-800 my-10 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
+                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
+              style={{ animationDelay: '0.4s' }}
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
+                Recent Transactions
+              </h2>
+              {user?.paymentScreenshots?.length || user?.withdrawMoney?.length ? (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {user?.paymentScreenshots?.map((item, idx) => (
+                    <D1 transaction={item} deposite={true} key={`deposit-${idx}`} />
+                  ))}
+                  {user?.withdrawMoney?.map((item, idx) => (
+                    <D1 transaction={item} deposite={false} key={`withdraw-${idx}`} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-400 text-center text-lg">
+                  No recent transactions yet.
+                </p>
+              )}
+            </div>
             {/* Transaction History */}
             <div
               className="bg-gray-800 p-8 rounded-2xl shadow-xl mb-8 flex flex-col 

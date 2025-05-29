@@ -84,7 +84,6 @@ export const updateUser = async (formdata) => {
 export const withdrawMoney = async ({money,userId}) => {
        
        const response = await api.post(`/withdraw-money/${userId}`, {money});
-       console.log(response)
        return response;
 };
 export const addPlan = async ({packageId,userId,image}) => {
@@ -105,7 +104,6 @@ export const addPlan = async ({packageId,userId,image}) => {
 };
 export const VerifySst = async ({packageId,userId,sstId}) => {
        const response = await api.post(`/verify-sst`,{packageId,userId,sstId});
-       console.log(response)
        return response;
        
 };

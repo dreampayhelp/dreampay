@@ -16,6 +16,7 @@ const packages = [
 ];
 
 const Join = () => {
+  
   const { user } = useSelector((s) => s.auth);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -71,7 +72,7 @@ const Join = () => {
       if (!image) {
         throw new Error('Please upload a payment screenshot.');
       }
-      const res = await addPlan({ packageId, userId: user._id, image });
+      const res = await addPlan({ packageId, userId: user?._id, image });
       if (res.data.success) {
         setImage(null);
         setImagePreview(null);
@@ -302,7 +303,7 @@ const Join = () => {
                 Scan to deposit your amount
               </p>
               <p className="text-gray-400 text-sm">
-                Use User ID ({user._id.slice(-8)}) in the payment reference
+                Use User ID ({user?._id.slice(-8)}) in the payment reference
               </p>
             </div>
 
@@ -434,7 +435,7 @@ const Join = () => {
               IFSC Code: DPAY0001234
             </p>
             <p className="text-gray-400 text-sm mt-2">
-              Include your User ID ({user._id.slice(-8)}) in the payment remarks.
+              Include your User ID ({user?._id.slice(-8)}) in the payment remarks.
             </p>
           </div>
         </div> */}
