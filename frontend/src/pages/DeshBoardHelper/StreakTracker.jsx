@@ -35,8 +35,7 @@ const StreakTracker = ({ planId }) => {
        useEffect(() => {
               fetchPlanData();
               setBalance(user?.balance);
-       }, [planId, user?.balance]);
-// console.log(plan)
+       }, [planId, user?.balance,plan?.streak]);
        const completeTask = async () => {
               try {
                      setLoading(true);
@@ -119,8 +118,8 @@ const StreakTracker = ({ planId }) => {
                                                  style={{ width: `${streakProgress}%` }}
                                           ></div>
                                    </div>
-                                   <p className="text-gray-400 text-xs mt-1">
-                                          Progress to 20-day milestone: {plan?.streak}/20 days
+                                   <p className="text-green-400 text-lg mt-1">
+                                          Progress to 25-day milestone: {plan?.dailyDeposit}/25 days
                                    </p>
                             </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { getProfile } from '../../services/api';
+import Profile from '../Admin/Profile';
 
 const D3 = () => {
        const [showTaskPopup, setShowTaskPopup] = useState(true);
@@ -13,7 +14,6 @@ const D3 = () => {
                      const response = await getProfile();
                      setProfile(response.data.user);
               } catch (err) {
-                     console.error('Error fetching profile:', err);
                      if (err.response?.status === 401) {
                             toast.error('Session expired. Please log in again.');
                             navigate('/login');
@@ -24,7 +24,7 @@ const D3 = () => {
        useEffect(() => {
               getUserProfile();
        }, []);
-
+console.log(user)
        return (
               <section className="mt-20 bg-gray-900 py-16 px-4 sm:px-8 lg:px-12">
                      <div className="max-w-7xl mx-auto">
@@ -34,7 +34,31 @@ const D3 = () => {
                             >
                                    Your Investment Plans
                             </h2>
-
+                            <div
+                                   className="mb-8 bg-gray-800 p-6 rounded-2xl shadow-xl border border-indigo-600/50 
+          transform hover:shadow-indigo-500/50 transition-all duration-300 animate-fade-in-up"
+                                   data-aos="fade-up"
+                            >
+                                   <h2 className="text-3xl font-bold text-white mb-4 text-center">
+                                          Your Investment Plans
+                                   </h2>
+                                   <p className="text-gray-300 text-center">
+                                          You have {user?.plans?.length} active plan{user?.plans?.length !== 1 ? 's' : ''} with a total
+                                          investment of ₹
+                                          {user?.plans?.reduce((sum, p) => sum + p.packageAmount, 0).toLocaleString()}.
+                                   </p>
+                                   <div className="mt-4 flex justify-center">
+                                          <Link
+                                                 to="/investment-packages"
+                                                 className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-2 px-6 
+              rounded-full hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
+              font-semibold shadow-md hover:shadow-lg focus:outline-none focus:ring-4 
+              focus:ring-teal-400 focus:ring-offset-2"
+                                          >
+                                                 Explore More Plans
+                                          </Link>
+                                   </div>
+                            </div>
                             {/* Complete Task Popup */}
                             {!user?.plans?.length && showTaskPopup && user && (
                                    <div

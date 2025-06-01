@@ -48,7 +48,6 @@ export const completeTask = async (req, res) => {
                      user.balance += plan.dailyIncome;
                      await user.save();
                      await plan.save();
-                     console.log(plan)
                      res.json({
                             message: "Task completed!",
                             streak: plan.streak,

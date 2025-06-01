@@ -15,7 +15,7 @@ const PlanSchema = new mongoose.Schema({
      type: Schema.Types.ObjectId,
     ref: "PaymentScreenShot"
   },
-  dailyDeposit : {type:Number,default:0}
+  dailyDeposit : {type:Number,default:0},
 });
 
 const Plan = mongoose.model("Plan", PlanSchema);

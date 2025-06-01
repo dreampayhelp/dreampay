@@ -21,35 +21,6 @@ const D2 = ({ profile, level, progress, referrals }) => {
       `Use the link and code above when registering.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
-//   const openWhatsapp = () => {
-//   // const referralLink = "https://example.com/signup"; // Replace with your actual link
-//   // const profile = { referralCode:profile.referralCode }; // Replace with your actual data
-
-//   const message = `🌟 *Join the Dream Pay Revolution!* 🌟\n\n` +
-//     `Unlock *passive income* with Dream Pay! 💰\n\n` +
-//     `*Your Referral Link*: ${referralLink}\n` +
-//     `*Referral Code*: *${profile.referralCode}*\n\n` +
-//     `🎉 *Bonuses Await!* 🎉\n` +
-//     `- Get ₹50 just for signing up!\n` +
-//     `- Earn an extra ₹50 by using my referral code!\n\n` +
-//     `---\n` +
-//     `*Sign up now* and start earning today! ➡️\n` +
-//     `Use the link and code above when registering.`;
-
-//   if (navigator.share) {
-//     navigator.share({
-//       title: 'Dream Pay Invitation',
-//       text: message,
-//       url: referralLink,
-//     })
-//     .then(() => console.log('Shared successfully'))
-//     .catch(err => console.error('Error sharing:', err));
-//   } else {
-//     // Fallback: open WhatsApp with pre-filled message
-//     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-//     window.open(whatsappUrl, '_blank');
-//   }
-// };
 
   const copyReferralCode = () => {
     navigator.clipboard.writeText(profile?.referralCode || '');

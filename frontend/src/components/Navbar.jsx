@@ -24,7 +24,6 @@ export default function Navbar() {
       toast.success('Logged out successfully');
       navigate('/login');
     } catch (err) {
-      console.error('Logout failed:', err);
       dispatch(logout());
       toast.error('Logout failed, but you have been signed out');
       navigate('/login');

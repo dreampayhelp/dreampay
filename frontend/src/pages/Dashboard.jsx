@@ -32,7 +32,6 @@ export default function Dashboard() {
       const response = await getProfile();
       setProfile(response.data.user);
     } catch (err) {
-      console.error('Error fetching profile:', err);
       if (err.response?.status === 401) {
         toast.error('Session expired. Please log in again.');
         navigate('/login');
@@ -72,7 +71,6 @@ export default function Dashboard() {
       try {
         await levelIncome({ userId: user?._id, level });
       } catch (error) {
-        console.error('Error fetching level income:', error);
       }
     };
     if (user?._id && level > 0) {
@@ -128,7 +126,7 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto relative z-10 ">
         {/* Complete Task Popup */}
-        {!loading && user?.plans?.length && showTaskPopup && (
+        {(!loading && user?.plans?.length && showTaskPopup) ? (
           <div className="fixed bottom-4 right-4 bg-gray-900 text-white px-4 py-3 rounded-2xl w-[260px] border border-gray-700 shadow-2xl animate-fade-in z-50 transition-all duration-500">
             <button
               onClick={() => setShowTaskPopup(false)}
@@ -147,7 +145,7 @@ export default function Dashboard() {
               View Details
             </Link>
           </div>
-        )}
+        ) : "" }
 
         {loading ? (
           <div className="flex justify-center items-center min-h-[50vh]">

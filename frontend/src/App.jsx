@@ -21,6 +21,9 @@ import UserPlans from './pages/DeshBoardHelper/UserPlans';
 import ContactUs from './pages/ContactUs';
 import D3 from './pages/DeshBoardHelper/D3';
 import F1 from './pages/homeHelper/F1';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import VerifyOtp from './pages/ForgotPassword/VerifyOtp';
+import ResetPassword from './pages/ForgotPassword/ResetPassword';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -45,6 +48,9 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/balance/:id" element={<ProtectedRoute><Balance /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/verify-forgot-otp" element={<VerifyOtp />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/request-otp" element={<RequestOTP />} /> {/* Add RequestOTP route */}
             <Route path="/verify-otp" element={<VerifyOTP />} />

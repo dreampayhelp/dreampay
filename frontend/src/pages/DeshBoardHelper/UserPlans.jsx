@@ -15,7 +15,6 @@ const UserPlans = () => {
   const { id } = useParams();
   const plan = user?.plans?.find((p,idx) => idx == id); // Filter by plan ID
   const [showStreak, setShowStreak] = useState(false);
-  // console.log(plan)
   return (
     <div
       className="min-h-screen bg-gray-900 py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden"

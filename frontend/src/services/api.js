@@ -21,6 +21,18 @@ export const loginUser = async (data) => {
        const response = await api.post('/login', data);
        return response;
 };
+export const forgotPassword = async (data) => {
+       const response = await api.post('/request-otp', data);
+       return response;
+};
+export const verifyforgotOtp = async ({email,otp}) => {
+       const response = await api.post('/verify-forgot-otp', {email,otp});
+       return response;
+};
+export const resetPassword = async ({email,newPassword}) => {
+       const response = await api.post('/change-password', {email,newPassword});
+       return response;
+};
 
 export const levelIncome = async ({userId,level}) => {
        const response = await api.post('/level-income', {userId,level});

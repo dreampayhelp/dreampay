@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { forgotPassword } from '../services/api';
 
 const authSlice = createSlice({
        name: 'auth',
@@ -6,7 +7,9 @@ const authSlice = createSlice({
               isAuthenticated: false,
               token: null,
               user:"",
-              isAdmin:false
+              isAdmin:false,
+              isforgot:false,
+              forgotPasswordemail:""
        },
        reducers: {
               login: (state, action) => {
@@ -18,6 +21,15 @@ const authSlice = createSlice({
                             state.isAdmin=false
                      }
               },
+              forgotPasswordSlice: (state, action) => {
+
+                     state.isforgot = true;
+                     state.forgotPasswordemail = action.payload;
+              },
+              forgotPasswordSlicenot: (state, action) => {
+                     state.isforgot = false;
+                     state.forgotPasswordemail = null;
+              },
               userData: (state, action) => {
                      state.user = action.payload;
               },
@@ -28,5 +40,5 @@ const authSlice = createSlice({
        },
 });
 
-export const { login, logout ,userData} = authSlice.actions;
+export const { login, logout ,userData,forgotPasswordSlice,forgotPasswordSlicenot} = authSlice.actions;
 export default authSlice.reducer;

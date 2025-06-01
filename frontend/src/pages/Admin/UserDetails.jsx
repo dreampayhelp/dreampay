@@ -15,7 +15,7 @@ const UserDetails = () => {
        const { userId } = useParams();
        const navigate = useNavigate();
        const dispatch = useDispatch();
-       const { user: authUser } = useSelector((st) => st.auth);
+       const { isAdmin } = useSelector((st) => st.auth);
        const [user, setUser] = useState(null);
        const [packageId, setPkgId] = useState("");
        const [sstId, setSstId] = useState("");
@@ -30,6 +30,9 @@ const UserDetails = () => {
        const [error, setError] = useState("");
 
        useEffect(() => {
+              if(!isAdmin){
+                     navigate("/dashboard")
+              }
 
               fetchUser();
        }, [userId]);

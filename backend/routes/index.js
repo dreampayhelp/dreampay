@@ -6,6 +6,7 @@ import { deleteUser, getAllUsers, getUserById, updateUser } from "../controllers
 import { upload } from "../middlewares/multermiddleware.js";
 import {  getPlanById, uploadSst, VerifySst } from "../controllers/PlanController.js";
 import { completeTask } from "../controllers/taskController.js";
+import { forgotPassword, resetPassword, verifyOtp } from "../controllers/forgetPasswordController.js";
 
 
 const router = express.Router();
@@ -13,6 +14,10 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
+
+router.post("/request-otp", forgotPassword);
+router.post("/verify-forgot-otp", verifyOtp);
+router.post("/change-password", resetPassword);
 
 router.post("/kyc/request-otp", authMiddleware, requestOTP);
 router.post("/kyc/verify-otp", authMiddleware, verifyOTP);

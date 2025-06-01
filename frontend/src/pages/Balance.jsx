@@ -35,7 +35,6 @@ const Balance = ({ userId }) => {
         navigate('/dashboard');
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
       toast.error('Failed to fetch user data. Please check your connection.');
       navigate('/dashboard');
     } finally {
@@ -100,7 +99,6 @@ const Balance = ({ userId }) => {
     setConfirmWithdrawal(false);
     setMoney('');
   };
-  // console.log(user)
   return (
     <div
       className="min-h-screen mt-20 flex flex-col items-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden"

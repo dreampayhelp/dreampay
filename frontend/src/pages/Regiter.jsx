@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerUser } from '../services/api';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
 export default function Register() {
-   const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -24,6 +23,7 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showTermsPopup, setShowTermsPopup] = useState(false);
   const navigate = useNavigate();
 
   const validateField = (name, value) => {
@@ -46,7 +46,7 @@ export default function Register() {
       case 'password':
         if (value.length < 8) {
           newErrors.password = 'Password must be least 8 characters';
-        }else{
+        } else {
           delete newErrors.password;
         }
         break;
@@ -252,9 +252,13 @@ export default function Register() {
               />
               <label htmlFor="terms" className="ml-2 text-sm text-gray-300">
                 I agree to the{' '}
-                <Link to="/terms" className="text-indigo-400 hover:text-indigo-300 hover:underline">
+                <button
+                  type="button"
+                  onClick={() => setShowTermsPopup(true)}
+                  className="text-indigo-400 hover:text-indigo-300 hover:underline"
+                >
                   Terms and Conditions
-                </Link>
+                </button>
               </label>
             </div>
             {errors.terms && <p className="text-red-400 text-sm mt-1">{errors.terms}</p>}
@@ -301,6 +305,43 @@ export default function Register() {
         </div>
       </div>
 
+      {/* Terms and Conditions Popup */}
+      {showTermsPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div
+            className="relative bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl w-full max-w-md border-2 border-transparent bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-padding hover:shadow-2xl hover:shadow-indigo-500/50 transition-all duration-500"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div className="bg-gray-800 rounded-xl p-6">
+              <h3 className="text-2xl font-bold text-center text-white mb-4">
+                Terms and Conditions
+              </h3>
+              <div className="max-h-64 overflow-y-auto text-gray-300 text-sm mb-6">
+                {terms}
+              </div>
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => {
+                    setAgreeTerms(true);
+                    setShowTermsPopup(false);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-1 transition-all"
+                >
+                  Accept
+                </button>
+                <button
+                  onClick={() => setShowTermsPopup(false)}
+                  className="flex-1 bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-gray-700 hover:-translate-y-1 transition-all"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Congratulatory Popup */}
       {showPopup && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
@@ -346,3 +387,19 @@ export default function Register() {
     </div>
   );
 }
+const terms = ` Terms & Conditions – Dream Pay 
+By accessing, browsing, registering, or utilizing any services or features provided under the brand name "Dream Pay" (hereinafter referred to as "the Company"), the user explicitly consents and agrees to be unconditionally bound by the following comprehensive Terms and Conditions. These provisions govern the entirety of the user's relationship with the platform and shall supersede any prior understandings or agreements, whether verbal or written. The user affirms that their participation is fully voluntary and has been initiated without any compulsion, pressure, or misrepresentation from the Company's side or any of its associated representatives.
+
+The Company categorically declares that it does not operate under any financial authority, government regulation, or recognized investment advisory body such as the Reserve Bank of India (RBI), Securities and Exchange Board of India (SEBI), or any other statutory institution. As such, any engagement with Dream Pay shall not be construed as an investment, loan, savings, deposit, mutual fund, chit fund, NBFC scheme, or any recognized financial instrument governed under Indian financial laws. The platform operates solely as a reward-based, performance-driven community system designed to function independently of conventional financial obligations.
+
+All users acknowledge and accept that any financial contribution, plan purchase, or monetary transaction made within or toward the system is executed solely at the user’s own discretion, and the entire risk of gain or loss rests solely with the user. The Company does not extend any promise, warranty, or guarantee of return, income, bonus, reward, or payout of any kind, either in part or full. No assurance is provided regarding the frequency, continuity, or sustainability of payouts. Earnings are subject to variable factors including, but not limited to, system load, user performance, algorithmic evaluations, manual verifications, and internal protocols.
+
+The user affirms that all payments made are final and non-refundable under all circumstances. Submitting a payment, uploading a receipt, or initiating a transaction shall not imply entitlement to any return or liability on part of the Company. All withdrawal requests are subject to rigorous scrutiny, manual evaluation, and may be approved or denied based on the Company’s internal policies, without any mandatory obligation to notify the user of specific reasons.
+
+The user further agrees that any participation in team-based structures, referral systems, level incomes, or other features constitutes a performance-based mechanism and not a financial contract. The Company shall not be held responsible for any failure on part of other users, team members, or referrals. The user explicitly agrees not to hold the Company, its promoters, developers, or associates accountable for any indirect, incidental, consequential, or punitive damages, including but not limited to profit loss, data breach, system failure, or miscommunication arising out of participation in the platform.
+
+Any misuse, misrepresentation, illegal promotion, unauthorized activity, mass spamming, fake referral practices, or violation of any local or cyber laws will lead to immediate account suspension or termination without any refund or warning. The Company reserves the sole right to revise, update, modify, or withdraw these terms at any time without prior notice.
+
+By proceeding to register, submit details, or interact with the platform in any way, the user unequivocally affirms that they have read, understood, and agreed to the above-stated Terms & Conditions and shall not have any claim against the Company in any forum, legal or otherwise, in case of any personal, financial, or reputational loss.
+
+If the user is not in complete agreement with the Terms & Conditions herein, they are advised to discontinue and refrain from registering or using any feature of the platform immediately.`

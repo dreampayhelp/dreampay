@@ -25,6 +25,7 @@ const F1 = () => {
        return (
               <section className="py-16 bg-none">
                      {/* Subtle background dots */}
+                     
                      <div className="absolute inset-0 pointer-events-none">
                             {[...Array(20)].map((_, i) => (
                                    <div

@@ -119,8 +119,8 @@ export const verifyOTP = async (req, res) => {
           </p>
           <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; margin: 20px 0;">
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Email:</strong> ${email}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Holder:</strong> ${user.AccountHolderName}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Number:</strong> ${user.AccountNo}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Holder:</strong> ${user.accountHolderName}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Account Number:</strong> ${user.accountNo}</p>
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>IFSC Code:</strong> ${user.ifscCode}</p>
           </div>
           <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
