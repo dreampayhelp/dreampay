@@ -97,6 +97,10 @@ export const deleteUser = async (userId) => {
        const response = await api.delete(`/delete-user/${userId}`,);
        return response;
 };
+export const blockUser = async (userId) => {
+       const response = await api.patch(`/block-user/${userId}`,);
+       return response;
+};
 export const withdrawMoney = async ({money,userId}) => {
        
        const response = await api.post(`/withdraw-money/${userId}`, {money});

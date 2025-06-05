@@ -81,9 +81,11 @@ export const login = async (req, res) => {
        const { email, password } = req.body;
        try {
               const user = await User.findOne({ email });
-              if (!user) throw new Error("Invalid Credentials");
+              if (!user) throw new Error("Invalid User Email");
+              if (user.isBlocked) throw new Error("Invalid Credentials");
+
               const isMatch = await bcrypt.compare(password, user.password);
-              if (!isMatch) throw new Error("Invalid Credentials");
+              if (!isMatch) throw new Error("Please enter correct Password");
               const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
               res.cookie("token", token, {
                      httpOnly: true,
@@ -94,7 +96,7 @@ export const login = async (req, res) => {
               if (user.email == 'kumanjeet779@gmail.com' || user.email == 'dreampay.help@gmail.com') {
                      res.json({ success: true, msg: "Login successful", admin: true });
               } else {
-                     res.json({ success: true, msg: "Login successful", success: true });
+                     res.json({ success: true, msg: "Login successful",  });
               }
        } catch (error) {
               res.json({ msg: error.message })
@@ -133,7 +135,6 @@ export const getProfile = async (req, res) => {
 export const getReferrals = async (req, res) => {
        try {
               const {userId} = req.params
-              console.log(userId)
               const user = await User.findById(userId);
               const referrals = await User.find({ referredBy: user.referralCode });
 

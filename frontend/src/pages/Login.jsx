@@ -55,7 +55,7 @@ export default function Login() {
         }
         toast.success('Login successful!');
       } else {
-        throw new Error('Unauthorized access. Please check your credentials.');
+        throw new Error(response.data.msg);
       }
     } catch (err) {
       setError(

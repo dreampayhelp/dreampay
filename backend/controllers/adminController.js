@@ -48,21 +48,22 @@ export const updateUser = async (req, res) => {
               res.json({ msg: error.message });
        }
 };
-// export const blockuser = async (req, res) => {
-//        try {
-//               let { userId } = req.body;
-//               const user = await User.findById(userId);
-//               if (!user) throw new Error("User not found");
+export const blockuser = async (req, res) => {
+       try {
+              let { userId } = req.params;
+              const user = await User.findById(userId);
+              if (!user) throw new Error("User not found");
             
             
-//               user.kycVerified = formdata.kycVerified !== undefined ? formdata.kycVerified : user.kycVerified;
+              user.isBlocked = (user?.isBlocked) ? false : true
 
-//               await user.save();
-//               res.json({ msg: "User updated successfully", user, success: true });
-//        } catch (error) {
-//               res.json({ msg: error.message });
-//        }
-// };
+              await user.save();
+              (user?.isBlocked) ? res.json({ msg: "User blocked ", user, success: true }) : res.json({ msg: "User Unblocked", user, success: true });
+              
+       } catch (error) {
+              res.json({ msg: error.message });
+       }
+};
 
 // Delete a user
 export const deleteUser = async (req, res) => {

@@ -5,18 +5,18 @@ import { addPlan } from '../services/api';
 import toast from 'react-hot-toast';
 import p3 from '../assets/p4.jpg'
 const packages = [
-  { id: 1, amount: 499, dailyIncome: 40, packageName: "Basic" },
-  { id: 2, amount: 999, dailyIncome: 80, packageName: "Medium" },
-  { id: 3, amount: 2499, dailyIncome: 200, featured: true, packageName: "Advance" },
-  { id: 4, amount: 4999, dailyIncome: 400, packageName: "Premium" },
-  { id: 5, amount: 7999, dailyIncome: 640, packageName: "Silver" },
-  { id: 6, amount: 9999, dailyIncome: 800, packageName: "Gold" },
-  { id: 7, amount: 24999, dailyIncome: 2000, packageName: "Diamond" },
-  { id: 8, amount: 49999, dailyIncome: 4000, packageName: "Platinum" },
+  { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
+  { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
+  { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Custom", returnPercentage: 70 },
+  { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Custom", returnPercentage: 80 },
+  { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
+  { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Custom", returnPercentage: 90 },
+  { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Custom", returnPercentage: 95 },
+  { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
 ];
 
 const Join = () => {
-  
+
   const { user } = useSelector((s) => s.auth);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -24,6 +24,21 @@ const Join = () => {
   const [confirmUpload, setConfirmUpload] = useState(false);
   const { packageId } = useParams();
   const location = useLocation();
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showTermsPopup, setShowTermsPopup] = useState(false);
+
+  const packages = [
+    { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
+    { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
+    { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Advance", returnPercentage: 70 },
+    { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Bronze", returnPercentage: 80 },
+    { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
+    { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Gold", returnPercentage: 90 },
+    { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Diamond", returnPercentage: 95 },
+    { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
+];
+
 
   // Scroll to top on route change
   useEffect(() => {
@@ -72,11 +87,15 @@ const Join = () => {
       if (!image) {
         throw new Error('Please upload a payment screenshot.');
       }
+      if (!agreeTerms) {
+        throw new Error('Please ensures to agree conditions');
+      }
       const res = await addPlan({ packageId, userId: user?._id, image });
       if (res.data.success) {
         setImage(null);
         setImagePreview(null);
         setConfirmUpload(false);
+        setShowPopup(true)
         toast.success('Screenshot uploaded successfully! Awaiting confirmation.');
       } else {
         throw new Error('Failed to upload screenshot.');
@@ -257,6 +276,7 @@ const Join = () => {
               >
                 2
               </span>
+
               <div>
                 <p className="text-lg font-medium text-white">Upload Payment Screenshot</p>
                 <p className="text-gray-400">
@@ -306,7 +326,26 @@ const Join = () => {
                 Use User ID ({user?._id.slice(-8)}) in the payment reference
               </p>
             </div>
-
+            <div className="flex items-center mb-5">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={agreeTerms}
+                onChange={() => setAgreeTerms(!agreeTerms)}
+                className="h-4 w-4 text-indigo-400 focus:ring-indigo-400 border-gray-600 rounded bg-gray-700"
+                disabled={loading}
+              />
+              <label htmlFor="terms" className="ml-2 text-sm text-gray-300">
+                I agree to the{' '}
+                <button
+                  type="button"
+                  onClick={() => setShowTermsPopup(true)}
+                  className="text-indigo-400 hover:text-indigo-300 hover:underline"
+                >
+                  Terms and Conditions
+                </button>
+              </label>
+            </div>
             {/* Upload Section */}
             <div className="flex flex-col items-center text-center w-full lg:w-1/2">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -411,7 +450,78 @@ const Join = () => {
             </div>
           </div>
         </div>
+        {showTermsPopup && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div
+              className="relative bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl w-full max-w-md border-2 border-transparent bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-padding hover:shadow-2xl hover:shadow-indigo-500/50 transition-all duration-500"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <div className="bg-gray-800 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-center text-white mb-4">
+                  Terms and Conditions
+                </h3>
+                <div className="max-h-64 overflow-y-auto text-gray-300 text-sm mb-6">
+                  {terms}
+                </div>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      setAgreeTerms(true);
+                      setShowTermsPopup(false);
+                    }}
+                    className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-1 transition-all"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => setShowTermsPopup(false)}
+                    className="flex-1 bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-gray-700 hover:-translate-y-1 transition-all"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
+        {/* Congratulatory Popup */}
+        {showPopup && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="relative bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl w-full max-w-md border-2 border-transparent bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-padding hover:shadow-2xl hover:shadow-indigo-500/50 transition-all duration-500">
+              {/* Confetti Dots */}
+              {[...Array(10)].map((_, i) => (
+                <div
+                  key={`confetti-${i}`}
+                  className={`absolute rounded-full ${i % 2 ? 'bg-teal-400' : 'bg-indigo-400'} animate-[confetti_3s_ease-out]`}
+                  style={{
+                    width: `${Math.random() * 6 + 4}px`,
+                    height: `${Math.random() * 6 + 4}px`,
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 0.5}s`,
+                  }}
+                />
+              ))}
+              <div className="bg-gray-800 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-4 animate-[pulse_2s_infinite]">
+                  Congratulations!
+                </h3>
+                <p className="text-gray-300 text-center mb-6 text-base">
+                  You have successfully joined a  <span className="text-teal-400 font-semibold">Dream Pay {selectedPackage.packageName} Package </span>
+
+                </p>
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-4 rounded-lg hover:from-teal-600 hover:to-cyan-600 hover:-translate-y-1 hover:ring-2 hover:ring-teal-400/30 transition-all text-lg font-semibold"
+                >
+                  Continue earning
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Alternative Payment Instructions */}
         {/* <div
           className="mt-12 bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8 animate-fade-in-up"
@@ -557,3 +667,19 @@ const Join = () => {
 };
 
 export default Join;
+const terms = ` Terms & Conditions – Dream Pay 
+By accessing, browsing, registering, or utilizing any services or features provided under the brand name "Dream Pay" (hereinafter referred to as "the Company"), the user explicitly consents and agrees to be unconditionally bound by the following comprehensive Terms and Conditions. These provisions govern the entirety of the user's relationship with the platform and shall supersede any prior understandings or agreements, whether verbal or written. The user affirms that their participation is fully voluntary and has been initiated without any compulsion, pressure, or misrepresentation from the Company's side or any of its associated representatives.
+
+The Company categorically declares that it does not operate under any financial authority, government regulation, or recognized investment advisory body such as the Reserve Bank of India (RBI), Securities and Exchange Board of India (SEBI), or any other statutory institution. As such, any engagement with Dream Pay shall not be construed as an investment, loan, savings, deposit, mutual fund, chit fund, NBFC scheme, or any recognized financial instrument governed under Indian financial laws. The platform operates solely as a reward-based, performance-driven community system designed to function independently of conventional financial obligations.
+
+All users acknowledge and accept that any financial contribution, plan purchase, or monetary transaction made within or toward the system is executed solely at the user’s own discretion, and the entire risk of gain or loss rests solely with the user. The Company does not extend any promise, warranty, or guarantee of return, income, bonus, reward, or payout of any kind, either in part or full. No assurance is provided regarding the frequency, continuity, or sustainability of payouts. Earnings are subject to variable factors including, but not limited to, system load, user performance, algorithmic evaluations, manual verifications, and internal protocols.
+
+The user affirms that all payments made are final and non-refundable under all circumstances. Submitting a payment, uploading a receipt, or initiating a transaction shall not imply entitlement to any return or liability on part of the Company. All withdrawal requests are subject to rigorous scrutiny, manual evaluation, and may be approved or denied based on the Company’s internal policies, without any mandatory obligation to notify the user of specific reasons.
+
+The user further agrees that any participation in team-based structures, referral systems, level incomes, or other features constitutes a performance-based mechanism and not a financial contract. The Company shall not be held responsible for any failure on part of other users, team members, or referrals. The user explicitly agrees not to hold the Company, its promoters, developers, or associates accountable for any indirect, incidental, consequential, or punitive damages, including but not limited to profit loss, data breach, system failure, or miscommunication arising out of participation in the platform.
+
+Any misuse, misrepresentation, illegal promotion, unauthorized activity, mass spamming, fake referral practices, or violation of any local or cyber laws will lead to immediate account suspension or termination without any refund or warning. The Company reserves the sole right to revise, update, modify, or withdraw these terms at any time without prior notice.
+
+By proceeding to register, submit details, or interact with the platform in any way, the user unequivocally affirms that they have read, understood, and agreed to the above-stated Terms & Conditions and shall not have any claim against the Company in any forum, legal or otherwise, in case of any personal, financial, or reputational loss.
+
+If the user is not in complete agreement with the Terms & Conditions herein, they are advised to discontinue and refrain from registering or using any feature of the platform immediately.`

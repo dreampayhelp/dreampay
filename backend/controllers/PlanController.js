@@ -17,14 +17,15 @@ import { error } from "console";
 //   { id: 8, amount: 50000, dailyIncome: 4000 },
 // ];
 
-const investmentPackages = [
+
+const selectedPackage = [
   { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
   { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
-  { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Custom", returnPercentage: 70 },
-  { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Custom", returnPercentage: 80 },
+  { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Advance", returnPercentage: 70 },
+  { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Bronze", returnPercentage: 80 },
   { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
-  { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Custom", returnPercentage: 90 },
-  { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Custom", returnPercentage: 95 },
+  { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Gold", returnPercentage: 90 },
+  { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Diamond", returnPercentage: 95 },
   { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
 ];
 
@@ -240,7 +241,7 @@ export const VerifySst = async (req, res) => {
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>User ID:</strong> ${userId}</p>
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Package Amount:</strong> ₹${selectedPackage.amount.toLocaleString()}</p>
             <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Daily Income:</strong> ₹${selectedPackage.dailyIncome.toLocaleString()}</p>
-            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Total Income (24 Days):</strong> ₹${(selectedPackage.dailyIncome * 24).toLocaleString()}</p>
+            <p style="color: #1f2937; font-size: 16px; margin: 5px 0;"><strong>Total Income (24 Days):</strong> ₹${(selectedPackage.totalIncome).toLocaleString()}</p>
           </div>
           <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
             You can now start earning your daily income. Check your dashboard for more details.

@@ -207,21 +207,23 @@ const Profile = () => {
             )}
           </div>
           <div className="overflow-auto">
-            <h2 className="text-lg font-semibold text-white text-center   flex gap-4 items-center">
+          <h2 className="text-md font-semibold text-white text-center flex gap-4 my-2 items-center">
+            <p className='text-teal-400'> Name :</p>{user?.name}
+          </h2>
+
+          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
+            <p className='text-teal-400'>   Ph. No. :</p> {user?.phoneNo}
+          </h2>
+
+            <h2 className="text-md font-semibold text-white text-center   flex gap-2 my-2 items-center">
               <p className='text-teal-400'> Email Id :</p>{user?.email}
             </h2>
+            <h2 className="text-md font-semibold text-white text-center flex gap-2  my-2 items-center">
+              <p className='text-teal-400'> User Id : </p> {user?._id}
+            </h2>
           </div>
-          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
-             <p className='text-teal-400'> Name :</p>{user?.name}
-          </h2>
+       
 
-          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
-           <p className='text-teal-400'>   Ph. No. :</p> {user?.phoneNo}
-          </h2>
-
-          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
-            <p className='text-teal-400'> User Id : </p> {user?._id}
-          </h2>
           <div className="flex space-x-4">
             <button
               onClick={() => setShowPopup(true)}

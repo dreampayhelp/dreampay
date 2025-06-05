@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import F1 from './homeHelper/F1';
@@ -14,7 +14,7 @@ import About from './About';
 const Home = () => {
   const location = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const registeredUsers = 12500; // Example number, replace with real data if available
+  const [registeredUsers,setRegisteredUser] = useState(12900); // Example number, replace with real data if available
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -22,11 +22,16 @@ const Home = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setRegisteredUser((prev) => prev+1)
+    },2000)
     aos.init({
       duration: 1000,
       once: false,
       easing: 'ease-out',
     });
+    return () => clearInterval(interval);
+
   }, []);
 
   useEffect(() => {
@@ -279,7 +284,7 @@ const Home = () => {
               className="text-4xl md:text-5xl font-extrabold text-yellow-400"
               data-aos="zoom-in"
             >
-              {registeredUsers.toLocaleString()} Members Registered
+              {registeredUsers} Members Registered
             </p>
             <p
               className="text-xl text-gray-200 mt-4 max-w-2xl mx-auto"

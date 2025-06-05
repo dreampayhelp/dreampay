@@ -1,30 +1,37 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const packages = [
-  { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
-  { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
-  { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Custom", returnPercentage: 70 },
-  { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Custom", returnPercentage: 80 },
-  { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
-  { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Custom", returnPercentage: 90 },
-  { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Custom", returnPercentage: 95 },
-  { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
+       { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
+       { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
+       { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Advance", returnPercentage: 70 },
+       { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Bronze", returnPercentage: 80 },
+       { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
+       { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Gold", returnPercentage: 90 },
+       { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Diamond", returnPercentage: 95 },
+       { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
 ];
 
 const F1 = () => {
        const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+       const navigate = useNavigate()
        const handleJoinClick = (pkgId) => {
-              return `/join/${pkgId}`;
+              if (!isAuthenticated) {
+                     toast.error("Please signup/signin to Join ")
+                     navigate("/login")
+              }
+              else {
+                     navigate(`/join/${pkgId}`)
+
+              }
        };
 
        return (
               <section className="py-16 bg-none">
                      {/* Subtle background dots */}
-                     
+
                      <div className="absolute inset-0 pointer-events-none">
                             {[...Array(20)].map((_, i) => (
                                    <div
@@ -58,9 +65,9 @@ const F1 = () => {
                                    {packages.map((pkg, index) => (
                                           <div
                                                  key={pkg.id}
-                                                 className={`relative bg-gray-800/80 backdrop-blur-xl p-6 rounded-xl border-2 border-teal-400 ${pkg.featured
-                                                               ? 'bg-gradient-to-r from-teal-500/50 to-cyan-500/50 bg-clip-padding'
-                                                               : 'bg-gradient-to-r from-indigo-600/50 to-purple-600/50 bg-clip-padding'
+                                                 className={`relative bg-gray-800/80 backdrop-blur-xl p-6 rounded-xl border-2  ${pkg.featured
+                                                        ? 'bg-gradient-to-r from-teal-500/50 to-cyan-500/50 bg-clip-padding'
+                                                        : 'bg-gradient-to-r from-indigo-600/50 to-purple-600/50 bg-clip-padding'
                                                         } hover:shadow-2xl hover:shadow-${pkg.featured ? 'teal' : 'indigo'
                                                         }-500/50 hover:ring-2 hover:ring-${pkg.featured ? 'teal' : 'indigo'
                                                         }-400/30 transition-all duration-500 group hover:scale-105`}
@@ -73,10 +80,10 @@ const F1 = () => {
                                                         </span>
                                                  )}
                                                  <h3
-                                                        className={`text-4xl  font-mono  font-bold text-yellow-400 my-5 text-center group-hover:text-${pkg.featured ? 'teal' : 'indigo'
+                                                        className={`text-4xl  font-serif  font-bold text-yellow-400 my-5 text-center group-hover:text-${pkg.featured ? 'teal' : 'indigo'
                                                                }-300 transition-colors`}
                                                  >
-                                                         {pkg.packageName}
+                                                        {pkg.packageName}
                                                  </h3>
                                                  <p
                                                         className={`text-3xl text-teal-500 backdrop-blur-sm font-bold text-${pkg.featured ? 'teal' : 'indigo'
@@ -131,17 +138,18 @@ const F1 = () => {
                                                                Package Expiry : 25 Days
                                                         </li>
                                                  </ul>
-                                                 <Link to={handleJoinClick(pkg.id)}>
+                                                 <div >
                                                         <button
+                                                               onClick={() => handleJoinClick(pkg.id)}
                                                                className={`w-full py-3 rounded-full text-white text-lg font-semibold transition-all duration-300 hover:-translate-y-1 ${pkg.featured
-                                                                             ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600'
-                                                                             : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
+                                                                      ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600'
+                                                                      : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
                                                                       } ${!isAuthenticated ? 'opacity-75 cursor-not-allowed' : ''}`}
-                                                               disabled={!isAuthenticated}
+
                                                         >
                                                                Join Now
                                                         </button>
-                                                 </Link>
+                                                 </div>
                                                  {!isAuthenticated && (
                                                         <span className="absolute hidden group-hover:block bg-gray-900/90 backdrop-blur-sm text-gray-300 text-xs rounded p-2 -mt-10 w-40 text-center left-1/2 -translate-x-1/2">
                                                                Log in to join this plan

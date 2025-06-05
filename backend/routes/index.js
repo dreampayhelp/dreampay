@@ -2,7 +2,7 @@ import express from "express";
 import authMiddleware from "../middlewares/authmiddleware.js";
 import { deposit, getProfile, getReferrals, getUserbyId, levelIncome, login, logout, register,  withdrawMoney } from "../controllers/usercontoller.js";
 import { requestOTP, verifyOTP } from "../controllers/kycController.js";
-import { deleteUser, getAllUsers, getUserById, updateUser } from "../controllers/adminController.js";
+import { blockuser, deleteUser, getAllUsers, getUserById, updateUser } from "../controllers/adminController.js";
 import { upload } from "../middlewares/multermiddleware.js";
 import {  getPlanById, uploadSst, VerifySst } from "../controllers/PlanController.js";
 import { completeTask } from "../controllers/taskController.js";
@@ -15,6 +15,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.delete("/delete-user/:userId", deleteUser);
+router.patch("/block-user/:userId",blockuser);
 
 router.post("/request-otp", forgotPassword);
 router.post("/verify-forgot-otp", verifyOtp);

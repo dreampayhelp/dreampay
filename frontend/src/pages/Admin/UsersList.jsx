@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { deleteUser, getUsers } from "../../services/api";
+import { blockUser, deleteUser, getUsers } from "../../services/api";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
+import { MdBlock } from "react-icons/md";
 const UsersList = () => {
   const location = useLocation();
 
@@ -93,8 +94,14 @@ const UsersList = () => {
 
   const deleteUserDetails = async(userId)=>{
     const res = await deleteUser(userId);
-    console.log(res)
     if(res.data.success){
+      fetchUsers()
+    }
+  }
+  const blockUserDetails = async(userId)=>{
+    const res = await blockUser(userId);
+    if(res.data.success){
+      toast.success(res.data.msg)
       fetchUsers()
     }
   }
@@ -242,6 +249,7 @@ const UsersList = () => {
                   { key: "kycVerified", label: "KYC" },
                   { key: null, label: "Actions" },
                   { key: null, label: "Details" },
+                  { key: null, label: "Block" },
                   { key: null, label: "Delete" },
                 ].map((col) => (
                   <th
@@ -310,6 +318,19 @@ const UsersList = () => {
                           See Details
                         </button>
                       </Link>
+
+                    </td>
+                    <td className="p-3 relative group">
+                        <button
+                        onClick={() =>blockUserDetails(user?._id)}
+                          className="bg-gradient-to-r from-red-500 to-red-500 text-white 
+                          px-4 py-2 rounded-lg  
+                          transition-all duration-300 focus:outline-none focus:ring-4 
+                          focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
+                          transform hover:scale-105"
+                        >
+                          <MdBlock />
+                        </button>
 
                     </td>
                     <td className="p-3 relative group">

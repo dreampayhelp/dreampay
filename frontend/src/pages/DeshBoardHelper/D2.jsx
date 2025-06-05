@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
+import { FaWhatsapp } from "react-icons/fa";
 const D2 = ({ profile, level, progress, referrals }) => {
   const [sum, setSum] = useState(0);
   let referralLink = window.location.href;
@@ -21,7 +21,42 @@ const D2 = ({ profile, level, progress, referrals }) => {
       `Use the link and code above when registering.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
+  const share = () => {
+    const message = `🌟 *Join the Dream Pay Revolution!* 🌟\n\n` +
+      `Unlock *passive income* with Dream Pay! 💰\n\n` +
+      `*Your Referral Link*: ${referralLink}\n` +
+      `*Referral Code*: *${profile?.referralCode}*\n\n` +
+      `🎉 *Bonuses Await!* 🎉\n` +
+      `- Get ₹50 just for signing up!\n` +
+      `- Earn an extra ₹50 by using my referral code!\n\n` +
+      `---\n` +
+      `*Sign up now* and start earning today! ➡️\n` +
+      `Use the link and code above when registering.`;
 
+    // Try Web Share API
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Join Dream Pay!',
+          text: message,
+        })
+        .catch((error) => {
+          console.error('Share Error:', error);
+          toast.error('Failed to share. Please try again.');
+        });
+    } else {
+      // Fallback: Copy to clipboard
+      navigator.clipboard
+        .writeText(message)
+        .then(() => {
+          toast.success('Referral link copied to clipboard!');
+        })
+        .catch((error) => {
+          console.error('Clipboard Error:', error);
+          toast.error('Failed to copy. Please copy manually.');
+        });
+    }
+  };
   const copyReferralCode = () => {
     navigator.clipboard.writeText(profile?.referralCode || '');
     toast.success('Referral code copied to clipboard!');
@@ -81,7 +116,7 @@ const D2 = ({ profile, level, progress, referrals }) => {
         </Link>
 
         {/* Referrals Income */}
-      
+
         <Link to={`/balance/${profile?._id}`}>
           <div
             className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
@@ -217,9 +252,9 @@ const D2 = ({ profile, level, progress, referrals }) => {
           rounded group-hover:bg-indigo-900/70 transition-colors duration-300">
             {referralLink}
           </p>
-          <div className="flex justify-between">
+          <div className="flex justify-between ">
             <button
-              onClick={openWhatsapp}
+              onClick={share}
               className="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 
             rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 
             font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
@@ -228,13 +263,22 @@ const D2 = ({ profile, level, progress, referrals }) => {
               Share
             </button>
             <button
+              onClick={openWhatsapp}
+              className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1
+            rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 
+            font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
+            focus:ring-green-400 focus:ring-offset-2"
+            >
+              <FaWhatsapp className='text-[30px]'/>
+            </button>
+            <button
               onClick={copyReferralLink}
               className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-5 py-2 
             rounded-full hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
             font-medium shadow-sm hover:shadow-md focus:outline-none focus:ring-4 
             focus:ring-teal-400 focus:ring-offset-2"
             >
-              Copy 
+              Copy
             </button>
           </div>
         </div>

@@ -177,30 +177,31 @@ export default function Dashboard() {
         ) : (
           <>
             <div className="flex justify-center items-center gap-5">
+
               <Link
-                to="/plans"
-                className="w-[160px] flex items-center justify-center gap-3 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                to={`/profile/${user?._id}`}
+                className="w-[160px] flex items-center justify-center gap-1  text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent "
                 style={{ animationDelay: '0.1s' }}
                 onClick={() => setIsOpen(false)}
               >
-                My Packages<FaArrowRight />
+                Profile<FaArrowRight className='mt-[3px]' />
               </Link>
               <Link
                 to={`/balance/${user?._id}`}
-                className="w-[160px] flex items-center justify-center gap-3 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                className="w-[160px] flex items-center justify-center gap-1 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent "
                 style={{ animationDelay: '0.1s' }}
                 onClick={() => setIsOpen(false)}
               >
 
-                Balance<FaArrowRight />
+                Balance<FaArrowRight className='mt-[3px]' />
               </Link>
               <Link
-                to={`/profile/${user?._id}`}
-                className="w-[160px] flex items-center justify-center gap-3  text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                to="/plans"
+                className="w-[160px] flex items-center justify-center gap-1 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent "
                 style={{ animationDelay: '0.1s' }}
                 onClick={() => setIsOpen(false)}
               >
-                Profile<FaArrowRight />
+                My Packages<FaArrowRight className='mt-[3px]' />
               </Link>
             </div>
             <h1
