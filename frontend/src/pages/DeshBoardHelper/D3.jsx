@@ -24,7 +24,6 @@ const D3 = () => {
        useEffect(() => {
               getUserProfile();
        }, []);
-console.log(user)
        return (
               <section className="mt-20 bg-gray-900 py-16 px-4 sm:px-8 lg:px-12">
                      <div className="max-w-7xl mx-auto">

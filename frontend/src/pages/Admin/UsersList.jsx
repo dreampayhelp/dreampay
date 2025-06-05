@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getUsers } from "../../services/api";
+import { deleteUser, getUsers } from "../../services/api";
 import toast from "react-hot-toast";
-
+import { MdDelete } from "react-icons/md";
 const UsersList = () => {
   const location = useLocation();
 
@@ -90,6 +90,14 @@ const UsersList = () => {
     (currentPage - 1) * usersPerPage,
     currentPage * usersPerPage
   );
+
+  const deleteUserDetails = async(userId)=>{
+    const res = await deleteUser(userId);
+    console.log(res)
+    if(res.data.success){
+      fetchUsers()
+    }
+  }
 
   if (loading) {
     return (
@@ -234,6 +242,7 @@ const UsersList = () => {
                   { key: "kycVerified", label: "KYC" },
                   { key: null, label: "Actions" },
                   { key: null, label: "Details" },
+                  { key: null, label: "Delete" },
                 ].map((col) => (
                   <th
                     key={col.label}
@@ -260,7 +269,7 @@ const UsersList = () => {
                     key={user?._id}
                     className="border-y hover:bg-gray-600 transition-colors"
                   >
-                    <td className="p-3 whitespace-nowrap text-gray-200">{name || "N/A"}</td>
+                    <td className="p-3 whitespace-nowrap text-gray-200">{user?.name || "N/A"}</td>
                     <td className="p-3 break-words max-w-xs text-gray-200">{user?.email}</td>
                     <td className="p-3 text-gray-200">₹{user?.balance.toLocaleString()}</td>
                     <td className="p-3 relative group">
@@ -301,6 +310,19 @@ const UsersList = () => {
                           See Details
                         </button>
                       </Link>
+
+                    </td>
+                    <td className="p-3 relative group">
+                        <button
+                        onClick={() =>deleteUserDetails(user?._id)}
+                          className="bg-gradient-to-r from-red-500 to-red-500 text-white 
+                          px-4 py-2 rounded-lg  
+                          transition-all duration-300 focus:outline-none focus:ring-4 
+                          focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
+                          transform hover:scale-105"
+                        >
+                          <MdDelete />
+                        </button>
 
                     </td>
                   </tr>

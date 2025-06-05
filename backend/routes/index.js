@@ -14,6 +14,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
+router.delete("/delete-user/:userId", deleteUser);
 
 router.post("/request-otp", forgotPassword);
 router.post("/verify-forgot-otp", verifyOtp);
@@ -21,7 +22,7 @@ router.post("/change-password", resetPassword);
 
 router.post("/kyc/request-otp", authMiddleware, requestOTP);
 router.post("/kyc/verify-otp", authMiddleware, verifyOTP);
-router.get("/referrals", authMiddleware, getReferrals);
+router.get("/referrals/:userId",  getReferrals);
 router.get("/profile", authMiddleware, getProfile);
 router.post("/deposit", authMiddleware, deposit);
 // router.post("/withdraw", authMiddleware, withdraw);
@@ -30,7 +31,6 @@ router.post("/deposit", authMiddleware, deposit);
 router.get("/users", authMiddleware, getAllUsers); // View all users
 router.get("/user/:userId", getUserById); // Get a single user
 router.put("/user", authMiddleware, updateUser); // Modify a user
-router.delete("/user/:userId", authMiddleware, deleteUser); // Delete a user
 
 router.post("/withdraw-money/:userId", authMiddleware,withdrawMoney);
 router.post("/upload-sst", authMiddleware, upload.single("image"), uploadSst);

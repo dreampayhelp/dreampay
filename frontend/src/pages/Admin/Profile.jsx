@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
-import { getUserById, updateUser } from '../../services/api';
+import { getReferrals, getUserById, updateUser } from '../../services/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
@@ -11,6 +11,7 @@ const Profile = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
+  const [referrals, setReferrals] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,9 +43,23 @@ const Profile = () => {
       setLoading(false);
     }
   };
-
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await getReferrals(id);
+      setReferrals(response.data);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        toast.error('Session expired. Please log in again.');
+        navigate('/login');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchUser();
+    fetchData();
     return () => {
       // Cleanup to prevent memory leaks
       setUser(null);
@@ -118,7 +133,6 @@ const Profile = () => {
       </div>
     );
   }
-
   if (error) {
     return (
       <div
@@ -193,16 +207,20 @@ const Profile = () => {
             )}
           </div>
           <div className="overflow-auto">
-            <h2 className="text-lg font-bold text-white text-center ">
-              {user?.email}
+            <h2 className="text-lg font-semibold text-white text-center   flex gap-4 items-center">
+              <p className='text-teal-400'> Email Id :</p>{user?.email}
             </h2>
           </div>
-          <h2 className="text-md font-semibold text-white text-center">
-            {user?.name}
+          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
+             <p className='text-teal-400'> Name :</p>{user?.name}
           </h2>
 
-          <h2 className="text-md font-semibold text-white text-center">
-            {user?.phoneNo}
+          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
+           <p className='text-teal-400'>   Ph. No. :</p> {user?.phoneNo}
+          </h2>
+
+          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
+            <p className='text-teal-400'> User Id : </p> {user?._id}
           </h2>
           <div className="flex space-x-4">
             <button
@@ -234,7 +252,7 @@ const Profile = () => {
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
                 className="w-full p-2 bg-gray-700 text-gray-200 rounded border border-gray-600 focus:ring-indigo-400 focus:border-indigo-400"
-                placeholder="Enter your name"
+                placeholder="Enter name"
               />
               <div className="flex space-x-4 mt-4">
                 <button
@@ -301,7 +319,7 @@ const Profile = () => {
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
               >
-                Your registered email address.
+                registered email address.
               </span>
             </div>
             <div className="p-4 bg-gray-700 rounded-lg relative group">
@@ -311,7 +329,7 @@ const Profile = () => {
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
               >
-                Your registered email address.
+                registered email address.
               </span>
             </div>
             <div className="p-4 bg-gray-700 rounded-lg relative group">
@@ -321,7 +339,7 @@ const Profile = () => {
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
               >
-                Your registered email address.
+                registered email address.
               </span>
             </div>
             <div className="p-4 bg-gray-700 rounded-lg relative group">
@@ -333,7 +351,7 @@ const Profile = () => {
                 className="absolute hidden group-hover:block bg-gray-900 text-gray-300 
                 text-xs rounded p-2 -mt-10 w-48"
               >
-                Your current account balance, available for withdrawal.
+                current account balance, available for withdrawal.
               </span>
             </div>
             <div className="p-4 bg-gray-700 rounded-lg flex justify-between items-center">
@@ -425,7 +443,39 @@ const Profile = () => {
               </span>
             </div>
           </div>
-
+          <div
+            className="bg-gray-800 rounded-3xl shadow-lg p-8 transform hover:shadow-xl 
+                hover:shadow-indigo-500/30 transition-all duration-300 animate-fade-in-up"
+            style={{ animationDelay: '0.2s' }}
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 text-center">
+              Referrals
+            </h2>
+            {referrals?.referrals?.length > 0 ? (
+              <ul className="space-y-4 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-gray-700 pr-2">
+                {referrals.referrals.map((ref, idx) => (
+                  <li
+                    key={ref._id}
+                    className="flex justify-between items-center border-b border-gray-600 py-4 
+                        text-gray-300 hover:bg-gray-700 transition-colors duration-300 rounded-lg px-2 
+                        animate-fade-in-up"
+                    style={{ animationDelay: `${0.1 * idx}s` }}
+                  >
+                    <span className="font-medium text-lg text-white">{ref.name}</span>
+                    <span className="text-sm text-gray-400 font-mono bg-gray-600 px-2 py-1 rounded">
+                      {ref._id.slice(-6)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-400 text-center text-lg">
+                No referrals yet. Invite friends to earn bonuses!
+              </p>
+            )}
+          </div>
           {/* Payment History */}
           <div data-aos="fade-up" data-aos-delay="300">
             <h3 className="text-xl font-semibold text-white mb-4">Payment History</h3>

@@ -8,6 +8,7 @@ import D2 from './DeshBoardHelper/D2';
 import F1 from './homeHelper/F1';
 import Balance from './Balance';
 import D3 from './DeshBoardHelper/D3';
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -145,7 +146,7 @@ export default function Dashboard() {
               View Details
             </Link>
           </div>
-        ) : "" }
+        ) : ""}
 
         {loading ? (
           <div className="flex justify-center items-center min-h-[50vh]">
@@ -175,8 +176,35 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
+            <div className="flex justify-center items-center gap-5">
+              <Link
+                to="/plans"
+                className="w-[160px] flex items-center justify-center gap-3 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                style={{ animationDelay: '0.1s' }}
+                onClick={() => setIsOpen(false)}
+              >
+                My Packages<FaArrowRight />
+              </Link>
+              <Link
+                to={`/balance/${user?._id}`}
+                className="w-[160px] flex items-center justify-center gap-3 text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                style={{ animationDelay: '0.1s' }}
+                onClick={() => setIsOpen(false)}
+              >
+
+                Balance<FaArrowRight />
+              </Link>
+              <Link
+                to={`/profile/${user?._id}`}
+                className="w-[160px] flex items-center justify-center gap-3  text-center text-gray-200 my-8 py-3  text-sm md:text-lg lg:text-lg font-medium transition-all duration-300 animate-fade-in-up hover:bg-gray-700 md:hover:bg-transparent rounded-md px-3 border-2 border-teal-500"
+                style={{ animationDelay: '0.1s' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Profile<FaArrowRight />
+              </Link>
+            </div>
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-white mb-16 animate-fade-in-down"
+              className="text-4xl sm:text-5xl mt-8 md:text-6xl font-bold text-center text-white mb-16 animate-fade-in-down"
               data-aos="fade-down"
             >
               🙏Welcome, {profile?.name || 'User'}!

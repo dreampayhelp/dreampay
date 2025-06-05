@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+
   name: String,
   email: { type: String, unique: true },
   password: String,
@@ -17,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   ifscCode: { type: String, },
   phoneNo: { type: String,default:"" },
   kycVerified: { type: Boolean, default: false },
+  isBlocked: { type: Boolean, default: false },
   otp: { type: String, },
   otpExpires: { type: Date, },
   withdrawMoney: [

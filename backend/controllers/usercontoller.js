@@ -132,7 +132,9 @@ export const getProfile = async (req, res) => {
 };
 export const getReferrals = async (req, res) => {
        try {
-              const user = await User.findById(req.user.userId);
+              const {userId} = req.params
+              console.log(userId)
+              const user = await User.findById(userId);
               const referrals = await User.find({ referredBy: user.referralCode });
 
               res.json({ success: true, referrals, });
@@ -335,3 +337,4 @@ export const levelIncome = async (req, res) => {
 
        }
 }
+

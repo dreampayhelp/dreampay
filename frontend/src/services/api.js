@@ -54,8 +54,8 @@ export const verifyKYCOTP = async ({ email, otp }) => {
        return response;
 };
 
-export const getReferrals = async () => {
-       const response = await api.get('/referrals');
+export const getReferrals = async (userId) => {
+       const response = await api.get(`/referrals/${userId}`);
        return response;
 };
 export const getProfile = async () => {
@@ -91,6 +91,10 @@ export const getPlanById = async ({ planId }) => {
 };
 export const updateUser = async (formdata) => {
        const response = await api.put(`/user`, {formdata});
+       return response;
+};
+export const deleteUser = async (userId) => {
+       const response = await api.delete(`/delete-user/${userId}`,);
        return response;
 };
 export const withdrawMoney = async ({money,userId}) => {

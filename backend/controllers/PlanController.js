@@ -6,15 +6,26 @@ import PaymentScreenShot from "../model/paymentScreenShot.js";
 import Plan from "../model/plan.js";
 import { error } from "console";
 
+// const investmentPackages = [
+//   { id: 1, amount: 500, dailyIncome: 40 },
+//   { id: 2, amount: 1000, dailyIncome: 80 },
+//   { id: 3, amount: 2500, dailyIncome: 200 },
+//   { id: 4, amount: 5000, dailyIncome: 400 },
+//   { id: 5, amount: 8000, dailyIncome: 640 },
+//   { id: 6, amount: 10000, dailyIncome: 800 },
+//   { id: 7, amount: 25000, dailyIncome: 2000 },
+//   { id: 8, amount: 50000, dailyIncome: 4000 },
+// ];
+
 const investmentPackages = [
-  { id: 1, amount: 500, dailyIncome: 40 },
-  { id: 2, amount: 1000, dailyIncome: 80 },
-  { id: 3, amount: 2500, dailyIncome: 200 },
-  { id: 4, amount: 5000, dailyIncome: 400 },
-  { id: 5, amount: 8000, dailyIncome: 640 },
-  { id: 6, amount: 10000, dailyIncome: 800 },
-  { id: 7, amount: 25000, dailyIncome: 2000 },
-  { id: 8, amount: 50000, dailyIncome: 4000 },
+  { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
+  { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
+  { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Custom", returnPercentage: 70 },
+  { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Custom", returnPercentage: 80 },
+  { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
+  { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Custom", returnPercentage: 90 },
+  { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Custom", returnPercentage: 95 },
+  { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
 ];
 
 // Add Investment Plan to User
@@ -47,7 +58,7 @@ export const uploadSst = async (req, res) => {
     const newSst = await PaymentScreenShot.create({
       imageUrl: uploadResult.secure_url,
       paymentDate: new Date(),
-      packageId : Number(selectedPackage.id),
+      packageId: Number(selectedPackage.id),
       money: selectedPackage.amount,
       owner: user._id,
     });
@@ -152,11 +163,23 @@ export const VerifySst = async (req, res) => {
     }
     const selectedPackage = investmentPackages.find((p) => p.id == packageId);
     if (!selectedPackage) {
-      throw new Error("Invalid package selected" );
+      throw new Error("Invalid package selected");
     }
 
     // Update payment screenshot
     const sst = await PaymentScreenShot.findById(sstId);
+    if (!sst) {
+      throw new Error("Invalid ScreenShot ID");
+
+    }
+    if (sst?.verifiedPlan ) {
+      throw new Error("Already verified");
+
+    }
+    if (sst?.packageId != packageId ) {
+      throw new Error("Wrong Package id");
+
+    }
     sst.verifiedPlan = true;
     await sst.save();
     // Referral Bonus & Level Update Logic
@@ -165,20 +188,20 @@ export const VerifySst = async (req, res) => {
 
       if (referrer) {
         // Referral bonus (10% of package amount)
-        let referralAmount = selectedPackage.amount * 0.10;
+        let referralAmount = selectedPackage.amount * 0.08;
         referrer.balance += referralAmount;
         referrer.referralBonus += referralAmount;
         referrer.referrals += 1;
 
         // Check if the referrer qualifies for the next level
-        let nextLevelTarget = 5 * Math.pow(2, referrer.level - 1); // 5, 10, 20, 40...
-        if (referrer.referrals >= nextLevelTarget) {
-          let levelBonus = referrer.referrals * 50; // 100% of referral earnings
-          referrer.balance += levelBonus;
-          referrer.levelBonus += levelBonus;
-          referrer.referralBonus += levelBonus;
-          referrer.level += 1;
-        }
+        // let nextLevelTarget = 5 * Math.pow(2, referrer.level - 1); // 5, 10, 20, 40...
+        // if (referrer.referrals >= nextLevelTarget) {
+        //   let levelBonus = referrer.referrals * 50; // 100% of referral earnings
+        //   referrer.balance += levelBonus;
+        //   referrer.levelBonus += levelBonus;
+        //   referrer.referralBonus += levelBonus;
+        //   referrer.level += 1;
+        // }
 
         await referrer.save();
       }
@@ -187,10 +210,10 @@ export const VerifySst = async (req, res) => {
     const plan = await Plan.create({
       packageAmount: selectedPackage.amount,
       dailyIncome: selectedPackage.dailyIncome,
-      totalIncome: selectedPackage.dailyIncome * 20,
+      totalIncome: selectedPackage.totalIncome,
       createdAt: new Date(),
-      owner: user._id,
-      sstId: sst._id,
+      owner: user?._id,
+      sstId: sst?._id,
     });
     user.plans.push(plan);
     await user.save();

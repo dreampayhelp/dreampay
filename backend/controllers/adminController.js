@@ -1,5 +1,6 @@
 import User from "../model/User.js";
 import PaymentScreenShot from "../model/paymentScreenShot.js";
+import Plan from "../model/plan.js";
 
 // Get all users
 export const getAllUsers = async (req, res) => {
@@ -47,13 +48,46 @@ export const updateUser = async (req, res) => {
               res.json({ msg: error.message });
        }
 };
+// export const blockuser = async (req, res) => {
+//        try {
+//               let { userId } = req.body;
+//               const user = await User.findById(userId);
+//               if (!user) throw new Error("User not found");
+            
+            
+//               user.kycVerified = formdata.kycVerified !== undefined ? formdata.kycVerified : user.kycVerified;
+
+//               await user.save();
+//               res.json({ msg: "User updated successfully", user, success: true });
+//        } catch (error) {
+//               res.json({ msg: error.message });
+//        }
+// };
 
 // Delete a user
 export const deleteUser = async (req, res) => {
-       try {
-              await User.findByIdAndDelete(req.params.userId);
-              res.json({ msg: "User deleted successfully", success: true });
-       } catch (error) {
-              res.json({ msg: "Server Error" });
-       }
+  try {
+    const { userId } = req.params;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Unauthorized access' });
+    }
+
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Delete user
+    await User.findByIdAndDelete(userId);
+
+    // Delete associated payments and plans
+    await PaymentScreenShot.deleteMany({ owner: userId });
+    await Plan.deleteMany({ owner: userId });
+
+    res.status(200).json({ success: true, message: 'Account and associated data deleted successfully' });
+  } catch (error) {
+    console.error('Delete User Error:', error);
+    res.status(500).json({ success: false, message: 'Server error. Please try again later' });
+  }
 };

@@ -81,25 +81,7 @@ const D2 = ({ profile, level, progress, referrals }) => {
         </Link>
 
         {/* Referrals Income */}
-        <Link to={`/balance/${profile?._id}`}>
-          <div
-            className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
-          hover:shadow-lg hover:shadow-indigo-400/50 transform hover:-translate-y-1 
-          transition-all duration-300 animate-fade-in-up border border-indigo-600/50 group"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <h2 className="text-lg md:text-xl font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
-              <span className="text-indigo-400">💰</span> Referrals Income
-            </h2>
-            <div
-              className="text-xl md:text-2xl font-medium text-white hover:text-yellow-400 
-            transition-colors duration-300"
-            >
-              ₹{(referrals?.referrals?.length * 50).toLocaleString()}
-            </div>
-          </div>
-        </Link>
+      
         <Link to={`/balance/${profile?._id}`}>
           <div
             className="relative p-6 bg-gray-700 text-center rounded-2xl shadow-md 
