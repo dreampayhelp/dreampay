@@ -25,6 +25,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import VerifyOtp from './pages/ForgotPassword/VerifyOtp';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import ReactGA from 'react-ga4';
+import { useEffect } from 'react';
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
