@@ -18,7 +18,7 @@ import { error } from "console";
 // ];
 
 
-const selectedPackage = [
+const investmentPackages = [
   { id: 1, amount: 499, dailyIncome: 32, totalIncome: 800, packageName: "Basic", returnPercentage: 60 },
   { id: 2, amount: 999, dailyIncome: 66, totalIncome: 1650, packageName: "Medium", returnPercentage: 65 },
   { id: 3, amount: 1999, dailyIncome: 136, totalIncome: 3400, packageName: "Advance", returnPercentage: 70 },
