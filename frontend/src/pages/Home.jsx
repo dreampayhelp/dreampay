@@ -10,21 +10,32 @@ import 'aos/dist/aos.css';
 import WhoChoose from './homeHelper/WhoChoose';
 import ContactUs from './ContactUs';
 import About from './About';
+import { getOther } from '../services/api';
 
 const Home = () => {
   const location = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const [registeredUsers,setRegisteredUser] = useState(12900); // Example number, replace with real data if available
+  const [registeredUsers, setRegisteredUser] = useState(12900); // Example number, replace with real data if available
   const canvasRef = useRef(null);
+  const getothers = async () => {
+    const res = await getOther();
+    if (res.data.success) {
+      // console.log(res.data.other)
+      setRegisteredUser(res.data.other[0].totaluser)
+    }
+  }
 
+  useEffect(() => {
+    getothers();
+  }, []);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRegisteredUser((prev) => prev+1)
-    },2000)
+      setRegisteredUser((prev) => prev + 1)
+    }, Math.floor(Math.random() *6 ) * 1000)
     aos.init({
       duration: 1000,
       once: false,
@@ -393,12 +404,12 @@ const Home = () => {
             </Link>
           </div>
           <div className="my-6">
-            <About/>
+            <About />
           </div>
-<ContactUs/>
+          <ContactUs />
 
         </section>
-        
+
       </div>
 
 

@@ -7,9 +7,14 @@ import { upload } from "../middlewares/multermiddleware.js";
 import {  getPlanById, uploadSst, VerifySst } from "../controllers/PlanController.js";
 import { completeTask } from "../controllers/taskController.js";
 import { forgotPassword, resetPassword, verifyOtp } from "../controllers/forgetPasswordController.js";
+import { getOther, updateUserCount } from "../controllers/otherController.js";
 
 
 const router = express.Router();
+
+router.patch("/update-count",authMiddleware, updateUserCount);
+router.get("/get-other",getOther);
+// router.post("/update-count",authMiddleware, updateUserCount);
 
 router.post("/register", register);
 router.post("/login", login);

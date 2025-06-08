@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { blockUser, deleteUser, getUsers } from "../../services/api";
+import { blockUser, deleteUser, getOther, getUsers, updateCount } from "../../services/api";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { MdBlock } from "react-icons/md";
@@ -13,6 +13,7 @@ const UsersList = () => {
   }, [location.pathname]);
 
   const [users, setUsers] = useState([]);
+  const [usersCount, setUserscount] = useState();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -28,6 +29,7 @@ const UsersList = () => {
     }
 
     fetchUsers();
+    getothers()
     return () => {
       // Cleanup
       setUsers([]);
@@ -103,6 +105,18 @@ const UsersList = () => {
     if(res.data.success){
       toast.success(res.data.msg)
       fetchUsers()
+    }
+  }
+  const increaseUsers = async()=>{
+    const res = await updateCount(usersCount);
+    if(res.data.success){
+      toast.success('user updated')
+    }
+  }
+  const getothers = async()=>{
+    const res = await getOther();
+    if(res.data.success){
+    //  console.log(res)
     }
   }
 
@@ -213,6 +227,28 @@ const UsersList = () => {
           </p>
         </div>
 
+        {/* Search Bar and Refresh */}
+        <div className="p-6 flex flex-col sm:flex-row gap-4" data-aos-delay="100">
+          <input
+            type="number"
+            placeholder="Increase User Count"
+            value={usersCount}
+            onChange={(e) => {
+              setUserscount(e.target.value);
+            }}
+            className="flex-1 p-3 bg-gray-700 text-gray-200 rounded-lg border-y border-gray-600 
+            focus:ring-indigo-400 focus:border-indigo-400 placeholder-gray-400 
+            transition-all duration-300 hover:bg-gray-600"
+          />
+          <button
+            onClick={increaseUsers}
+            className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-2 px-4 
+            rounded-lg hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 
+            font-semibold shadow-md hover:shadow-lg"
+          >
+            increase
+          </button>
+        </div>
         {/* Search Bar and Refresh */}
         <div className="p-6 flex flex-col sm:flex-row gap-4" data-aos-delay="100">
           <input

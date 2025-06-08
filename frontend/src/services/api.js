@@ -11,6 +11,14 @@ const api = axios.create({
        withXSRFToken: true,
 });
 
+export const updateCount = async (data) => {
+       const response = await api.patch('/update-count', {number : data,message:"hii"});
+       return response;
+};
+export const getOther = async () => {
+       const response = await api.get('/get-other');
+       return response;
+};
 export const registerUser = async (data) => {
        const response = await api.post('/register', data);
        return response;

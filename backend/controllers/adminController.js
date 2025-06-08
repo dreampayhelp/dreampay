@@ -1,4 +1,5 @@
 import User from "../model/User.js";
+import Other from "../model/other.js";
 import PaymentScreenShot from "../model/paymentScreenShot.js";
 import Plan from "../model/plan.js";
 
@@ -7,7 +8,8 @@ export const getAllUsers = async (req, res) => {
 
        try {
               const users = await User.find();
-              res.json({ users, success: true });
+              const others = await Other.find();
+              res.json({ users, success: true,others });
        } catch (error) {
               res.json({ msg: "Server Error" });
        }
