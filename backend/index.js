@@ -12,7 +12,7 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173","https://dreampay.vercel.app"], credentials: true })); // Adjust frontend URL
+app.use(cors({ origin: ["http://localhost:5173","https://dreampay.vercel.app","https://www.dreampay.cloud"], credentials: true })); // Adjust frontend URL
 app.use(cookieParser());
 
 app.use("/api", routes);
