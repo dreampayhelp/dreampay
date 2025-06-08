@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Regiter';
@@ -24,7 +24,7 @@ import F1 from './pages/homeHelper/F1';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import VerifyOtp from './pages/ForgotPassword/VerifyOtp';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
-
+import ReactGA from 'react-ga4';
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -36,10 +36,20 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 function App() {
+  function GAListener() {
+    const location = useLocation();
+
+    useEffect(() => {
+      ReactGA.send({ hitType: "pageview", page: location.pathname });
+    }, [location]);
+
+    return null;
+  }
   return (
     <div className="">
       <Toaster />
       <BrowserRouter>
+        <GAListener />
         <div className="min-h-screen bg-gray-100">
           <Navbar />
           <Routes>
