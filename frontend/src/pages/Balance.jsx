@@ -72,8 +72,8 @@ const Balance = ({ userId }) => {
       if (amount > (user?.balance)) {
         throw new Error('Insufficient balance.');
       }
-      if (amount < 200) {
-        throw new Error('Minimum withdraw ₹200.');
+      if (amount < 100) {
+        throw new Error('Minimum withdraw ₹100.');
       }
       
       if (!agreeTerms) {
