@@ -5,6 +5,7 @@ import { blockUser, deleteUser, getOther, getUsers, updateCount } from "../../se
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { MdBlock } from "react-icons/md";
+import { CgUnblock } from "react-icons/cg";
 const UsersList = () => {
   const location = useLocation();
 
@@ -22,7 +23,6 @@ const UsersList = () => {
   const navigate = useNavigate();
   const { user, isAdmin } = useSelector((st) => st.auth); // Assume auth store has user
   const usersPerPage = 10;
-
   useEffect(() => {
     if (!isAdmin) {
       navigate("/")
@@ -359,13 +359,13 @@ const UsersList = () => {
                     <td className="p-3 relative group">
                         <button
                         onClick={() =>blockUserDetails(user?._id)}
-                          className="bg-gradient-to-r from-red-500 to-red-500 text-white 
+                          className={`${(user?.isBlocked) ? 'bg-gradient-to-r from-red-500 to-red-500'  :'bg-gradient-to-r from-green-500 to-green-500'} text-white 
                           px-4 py-2 rounded-lg  
                           transition-all duration-300 focus:outline-none focus:ring-4 
                           focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
-                          transform hover:scale-105"
+                          transform hover:scale-105 `}
                         >
-                          <MdBlock />
+                          {(user?.isBlocked) ?  <MdBlock /> : <CgUnblock /> }
                         </button>
 
                     </td>

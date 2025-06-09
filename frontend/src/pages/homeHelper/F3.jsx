@@ -1,5 +1,9 @@
 import React from 'react';
 
+import p5 from '../../assets/p5.jpg'
+import p6 from '../../assets/p6.jpg'
+import p7 from '../../assets/p7.jpg'
+
 const F3 = () => {
   return (
     <div className="font-sans">
@@ -26,10 +30,10 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src=""
+                  src={p5}
                   alt="Mohan Lal Singh"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
-                />
+                /> 
                 <div>
                   <p className="font-semibold text-white">Mohan Lal Singh</p>
                   <p className="text-sm text-gray-500">Member since 2023</p>
@@ -49,7 +53,7 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src=""
+                  src={p6}
                   alt="Riya Kumari"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
                 />
@@ -72,12 +76,12 @@ const F3 = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src=""
+                  src={p7}
                   alt="Aadya Mathur"
                   className="w-12 h-12 rounded-full mr-4 border-2 border-indigo-400"
                 />
                 <div>
-                  <p className="font-semibold text-white">Aadya Mathur</p>
+                  <p className="font-semibold text-white">Aditya Mathur</p>
                   <p className="text-sm text-gray-500">Member since 2022</p>
                 </div>
               </div>

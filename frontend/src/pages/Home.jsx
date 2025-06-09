@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import F1 from './homeHelper/F1';
 import F2 from './homeHelper/F2';
-import InvestmentPackages from './homeHelper/InvestmentPage';
 import F3 from './homeHelper/F3';
 import aos from 'aos';
 import 'aos/dist/aos.css';
@@ -11,7 +10,6 @@ import WhoChoose from './homeHelper/WhoChoose';
 import ContactUs from './ContactUs';
 import About from './About';
 import { getOther } from '../services/api';
-
 const Home = () => {
   const location = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
