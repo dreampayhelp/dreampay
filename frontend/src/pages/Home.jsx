@@ -163,6 +163,30 @@ const Home = () => {
           </div>
 
         </div>
+         <section className="py-20 bg-none0">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <h2
+              className="text-3xl md:text-4xl font-bold text-white mb-4"
+              data-aos="fade-up"
+            >
+              Join Our Thriving Community
+            </h2>
+            <p
+              className="text-4xl md:text-5xl font-extrabold text-yellow-400"
+              data-aos="zoom-in"
+            >
+              {registeredUsers} Members Registered
+            </p>
+            <p
+              className="text-xl text-gray-200 mt-4 max-w-2xl mx-auto"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              Become part of a global network of investors and earners building wealth
+              together with Dream Pay.
+            </p>
+          </div>
+        </section>
         <WhoChoose />
         {/* <InvestmentPackages /> */}
 
@@ -283,30 +307,7 @@ const Home = () => {
         </section>
 
         {/* Registered Users Section */}
-        <section className="py-20 bg-none0">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-white mb-4"
-              data-aos="fade-up"
-            >
-              Join Our Thriving Community
-            </h2>
-            <p
-              className="text-4xl md:text-5xl font-extrabold text-yellow-400"
-              data-aos="zoom-in"
-            >
-              {registeredUsers} Members Registered
-            </p>
-            <p
-              className="text-xl text-gray-200 mt-4 max-w-2xl mx-auto"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              Become part of a global network of investors and earners building wealth
-              together with Dream Pay.
-            </p>
-          </div>
-        </section>
+       
 
         {/* FAQ Section */}
         <section className="py-20 bg-none">

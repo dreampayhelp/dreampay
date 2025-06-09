@@ -10,7 +10,7 @@ const packages = [
        { id: 4, amount: 3999, dailyIncome: 288, totalIncome: 7200, packageName: "Bronze", returnPercentage: 80 },
        { id: 5, amount: 7999, dailyIncome: 592, totalIncome: 14800, packageName: "Silver", returnPercentage: 85 },
        { id: 6, amount: 14999, dailyIncome: 1140, totalIncome: 28500, packageName: "Gold", returnPercentage: 90 },
-       { id: 7, amount: 29999, dailyIncome: 2740, totalIncome: 68500, packageName: "Diamond", returnPercentage: 95 },
+       { id: 7, amount: 29999, dailyIncome: 2340, totalIncome: 58500, packageName: "Diamond", returnPercentage: 95 },
        { id: 8, amount: 49999, dailyIncome: 4000, totalIncome: 100000, packageName: "Platinum", returnPercentage: 100 }
 ];
 
