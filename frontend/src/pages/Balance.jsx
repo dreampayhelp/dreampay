@@ -296,7 +296,7 @@ const Balance = ({ userId }) => {
                       ? 'border-red-500'
                       : 'border-gray-600'
                     }`}
-                  placeholder="Enter amount for withdrawal (min ₹50)"
+                  placeholder="Enter amount for withdrawal (min ₹100)"
                   disabled={requestLoading}
                   min="0"
                 />
