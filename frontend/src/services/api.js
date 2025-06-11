@@ -10,7 +10,9 @@ const api = axios.create({
        withCredentials: true,
        withXSRFToken: true,
 });
-
+export const start = async() => await fetch(`/start`,{
+       method:'get'
+})
 export const updateCount = async (data) => {
        const response = await api.patch('/update-count', {number : data,message:"hii"});
        return response;

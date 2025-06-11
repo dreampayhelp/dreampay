@@ -26,6 +26,7 @@ import VerifyOtp from './pages/ForgotPassword/VerifyOtp';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import ReactGA from 'react-ga4';
 import { useEffect } from 'react';
+import { start } from './services/api';
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -46,7 +47,13 @@ function App() {
 
     return null;
   }
+  
+  useEffect(() => {
+    start();
+  }, [])
+
   return (
+    
     <div className="">
       <Toaster />
       <BrowserRouter>

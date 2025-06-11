@@ -338,4 +338,6 @@ export const levelIncome = async (req, res) => {
 
        }
 }
-
+export const pageReload = async(req,res) => {
+       res.send("done")
+}

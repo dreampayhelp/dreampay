@@ -1,6 +1,6 @@
 import express from "express";
 import authMiddleware from "../middlewares/authmiddleware.js";
-import { deposit, getProfile, getReferrals, getUserbyId, levelIncome, login, logout, register,  withdrawMoney } from "../controllers/usercontoller.js";
+import { deposit, getProfile, getReferrals, getUserbyId, levelIncome, login, logout, pageReload, register,  withdrawMoney } from "../controllers/usercontoller.js";
 import { requestOTP, verifyOTP } from "../controllers/kycController.js";
 import { blockuser, deleteUser, getAllUsers, getUserById, updateUser } from "../controllers/adminController.js";
 import { upload } from "../middlewares/multermiddleware.js";
@@ -45,5 +45,6 @@ router.get("/plan/:planId",   getPlanById);
 router.post("/level-income", authMiddleware, levelIncome);
 router.post("/streak", authMiddleware, completeTask);
 
+router.get('/start',pageReload);
 
 export default router;
