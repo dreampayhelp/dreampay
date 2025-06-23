@@ -94,29 +94,29 @@ const UsersList = () => {
     currentPage * usersPerPage
   );
 
-  const deleteUserDetails = async(userId)=>{
+  const deleteUserDetails = async (userId) => {
     const res = await deleteUser(userId);
-    if(res.data.success){
+    if (res.data.success) {
       fetchUsers()
     }
   }
-  const blockUserDetails = async(userId)=>{
+  const blockUserDetails = async (userId) => {
     const res = await blockUser(userId);
-    if(res.data.success){
+    if (res.data.success) {
       toast.success(res.data.msg)
       fetchUsers()
     }
   }
-  const increaseUsers = async()=>{
+  const increaseUsers = async () => {
     const res = await updateCount(usersCount);
-    if(res.data.success){
+    if (res.data.success) {
       toast.success('user updated')
     }
   }
-  const getothers = async()=>{
+  const getothers = async () => {
     const res = await getOther();
-    if(res.data.success){
-    //  console.log(res)
+    if (res.data.success) {
+      //  console.log(res)
     }
   }
 
@@ -279,12 +279,12 @@ const UsersList = () => {
             <thead>
               <tr className="bg-gray-700 text-gray-300">
                 {[
+                  { key: null, label: "Details" },
                   { key: "name", label: "Name" },
                   { key: "email", label: "Email" },
                   { key: "balance", label: "Balance" },
                   { key: "kycVerified", label: "KYC" },
                   { key: null, label: "Actions" },
-                  { key: null, label: "Details" },
                   { key: null, label: "Block" },
                   { key: null, label: "Delete" },
                 ].map((col) => (
@@ -313,6 +313,20 @@ const UsersList = () => {
                     key={user?._id}
                     className="border-y hover:bg-gray-600 transition-colors"
                   >
+                    <td className="p-3 relative group">
+                      <Link to={`/profile/${user?._id}`}>
+                        <button
+                          className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white 
+                          px-4 py-2 rounded-lg hover:from-teal-600 hover:to-cyan-600 
+                          transition-all duration-300 focus:outline-none focus:ring-4 
+                          focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
+                          transform hover:scale-105"
+                        >
+                          See Details
+                        </button>
+                      </Link>
+
+                    </td>
                     <td className="p-3 whitespace-nowrap text-gray-200">{user?.name || "N/A"}</td>
                     <td className="p-3 break-words max-w-xs text-gray-200">{user?.email}</td>
                     <td className="p-3 text-gray-200">₹{user?.balance.toLocaleString()}</td>
@@ -342,44 +356,31 @@ const UsersList = () => {
                       </button>
 
                     </td>
-                    <td className="p-3 relative group">
-                      <Link to={`/profile/${user?._id}`}>
-                        <button
-                          className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white 
-                          px-4 py-2 rounded-lg hover:from-teal-600 hover:to-cyan-600 
-                          transition-all duration-300 focus:outline-none focus:ring-4 
-                          focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
-                          transform hover:scale-105"
-                        >
-                          See Details
-                        </button>
-                      </Link>
 
-                    </td>
                     <td className="p-3 relative group">
-                        <button
-                        onClick={() =>blockUserDetails(user?._id)}
-                          className={`${(user?.isBlocked) ? 'bg-gradient-to-r from-red-500 to-red-500'  :'bg-gradient-to-r from-green-500 to-green-500'} text-white 
+                      <button
+                        onClick={() => blockUserDetails(user?._id)}
+                        className={`${(user?.isBlocked) ? 'bg-gradient-to-r from-red-500 to-red-500' : 'bg-gradient-to-r from-green-500 to-green-500'} text-white 
                           px-4 py-2 rounded-lg  
                           transition-all duration-300 focus:outline-none focus:ring-4 
                           focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
                           transform hover:scale-105 `}
-                        >
-                          {(user?.isBlocked) ?  <MdBlock /> : <CgUnblock /> }
-                        </button>
+                      >
+                        {(user?.isBlocked) ? <MdBlock /> : <CgUnblock />}
+                      </button>
 
                     </td>
                     <td className="p-3 relative group">
-                        <button
-                        onClick={() =>deleteUserDetails(user?._id)}
-                          className="bg-gradient-to-r from-red-500 to-red-500 text-white 
+                      <button
+                        onClick={() => deleteUserDetails(user?._id)}
+                        className="bg-gradient-to-r from-red-500 to-red-500 text-white 
                           px-4 py-2 rounded-lg  
                           transition-all duration-300 focus:outline-none focus:ring-4 
                           focus:ring-teal-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
                           transform hover:scale-105"
-                        >
-                          <MdDelete />
-                        </button>
+                      >
+                        <MdDelete />
+                      </button>
 
                     </td>
                   </tr>
@@ -468,34 +469,7 @@ const UsersList = () => {
         .particle { animation: float linear infinite; pointer-events: none; }
         .group-hover:block { display: none; }
         .group:hover .group-hover:block { display: block; }
-        @media (max-width: 640px) {
-          table {
-            display: block;
-            overflow-x: auto;
-            white-space: nowrap;
-          }
-          thead {
-            display: none;
-          }
-          tbody tr {
-            display: block;
-            margin-bottom: 1rem;
-            border: 1px solid #4b5563;
-            border-radius: 0.5rem;
-            padding: 1rem;
-          }
-          tbody td {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border: none;
-          }
-          tbody td:before {
-            content: attr(data-label);
-            font-weight: 600;
-            color: #9ca3af;
-            margin-right: 1rem;
-          }
+       
         }
       `}</style>
     </div>

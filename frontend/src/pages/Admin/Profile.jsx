@@ -206,23 +206,31 @@ const Profile = () => {
               <span className="text-3xl text-gray-300o">{user?.email[0].toUpperCase()}</span>
             )}
           </div>
-          <div className="overflow-auto">
-          <h2 className="text-md font-semibold text-white text-center flex gap-4 my-2 items-center">
-            <p className='text-teal-400'> Name :</p>{user?.name}
-          </h2>
+          <div className="w-full px-4">
+            <div className="text-white text-sm space-y-3">
+              <div className="flex flex-col md:flex-row justify-center items-center gap-2">
+                <span className="text-teal-400 font-semibold">Name:</span>
+                <span>{user?.name}</span>
+              </div>
 
-          <h2 className="text-md font-semibold text-white text-center flex gap-4 items-center">
-            <p className='text-teal-400'>   Ph. No. :</p> {user?.phoneNo}
-          </h2>
+              <div className="flex flex-col md:flex-row justify-center items-center gap-2">
+                <span className="text-teal-400 font-semibold">Ph. No.:</span>
+                <span>{user?.phoneNo}</span>
+              </div>
 
-            <h2 className="text-md font-semibold text-white text-center   flex gap-2 my-2 items-center">
-              <p className='text-teal-400'> Email Id :</p>{user?.email}
-            </h2>
-            <h2 className="text-md font-semibold text-white text-center flex gap-2  my-2 items-center">
-              <p className='text-teal-400'> User Id : </p> {user?._id}
-            </h2>
+              <div className="flex flex-col md:flex-row justify-center items-center gap-2">
+                <span className="text-teal-400 font-semibold">Email Id:</span>
+                <span>{user?.email}</span>
+              </div>
+
+              <div className="flex flex-col md:flex-row justify-center items-center gap-2">
+                <span className="text-teal-400 font-semibold">User Id:</span>
+                <span>{user?._id}</span>
+              </div>
+            </div>
           </div>
-       
+
+
 
           <div className="flex space-x-4">
             <button
