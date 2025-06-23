@@ -57,6 +57,8 @@ const Profile = () => {
       setLoading(false);
     }
   };
+
+  //v
   useEffect(() => {
     fetchUser();
     fetchData();
@@ -229,7 +231,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
 
 
           <div className="flex space-x-4">
