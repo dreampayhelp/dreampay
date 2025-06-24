@@ -189,7 +189,7 @@ export const VerifySst = async (req, res) => {
 
       if (referrer) {
         // Referral bonus (10% of package amount)
-        let referralAmount = (selectedPackage.amount * 0.08).toFixed(2);
+        let referralAmount = (selectedPackage.amount * 0.08);
         referrer.balance += referralAmount;
         referrer.referralBonus += referralAmount;
         referrer.referrals += 1;
