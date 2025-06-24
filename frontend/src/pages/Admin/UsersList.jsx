@@ -280,11 +280,11 @@ const UsersList = () => {
               <tr className="bg-gray-700 text-gray-300">
                 {[
                   { key: null, label: "Details" },
+                  { key: null, label: "Actions" },
                   { key: "name", label: "Name" },
                   { key: "email", label: "Email" },
                   { key: "balance", label: "Balance" },
                   { key: "kycVerified", label: "KYC" },
-                  { key: null, label: "Actions" },
                   { key: null, label: "Block" },
                   { key: null, label: "Delete" },
                 ].map((col) => (
@@ -327,6 +327,19 @@ const UsersList = () => {
                       </Link>
 
                     </td>
+                    <td className="p-3 relative group">
+                      <button
+                        onClick={() => navigate(`/admin/user/${user?._id}`)}
+                        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
+                        px-4 py-2 rounded-lg hover:from-indigo-700 hover:to-purple-700 
+                        transition-all duration-300 focus:outline-none focus:ring-4 
+                        focus:ring-indigo-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
+                        transform hover:scale-105"
+                      >
+                        Update
+                      </button>
+
+                    </td>
                     <td className="p-3 whitespace-nowrap text-gray-200">{user?.name || "N/A"}</td>
                     <td className="p-3 break-words max-w-xs text-gray-200">{user?.email}</td>
                     <td className="p-3 text-gray-200">₹{user?.balance.toLocaleString()}</td>
@@ -343,19 +356,7 @@ const UsersList = () => {
                         Indicates if the user has completed KYC verification.
                       </span>
                     </td>
-                    <td className="p-3 relative group">
-                      <button
-                        onClick={() => navigate(`/admin/user/${user?._id}`)}
-                        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
-                        px-4 py-2 rounded-lg hover:from-indigo-700 hover:to-purple-700 
-                        transition-all duration-300 focus:outline-none focus:ring-4 
-                        focus:ring-indigo-400 focus:ring-offset-2 shadow-md hover:shadow-lg 
-                        transform hover:scale-105"
-                      >
-                        Update
-                      </button>
 
-                    </td>
 
                     <td className="p-3 relative group">
                       <button
