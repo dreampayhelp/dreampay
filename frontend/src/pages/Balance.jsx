@@ -68,7 +68,7 @@ const Balance = ({ userId }) => {
       if (isNaN(amount) || amount <= 0) {
         throw new Error('Please enter a valid amount.');
       }
-if ((user?.balance) < 50 ) {
+if ((user?.balance) - amount < 50 ) {
         throw new Error('Account balance should be greater than 50 Rs.');
 }
       if (amount > (user?.balance)) {
