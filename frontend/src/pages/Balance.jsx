@@ -68,14 +68,14 @@ const Balance = ({ userId }) => {
       if (isNaN(amount) || amount <= 0) {
         throw new Error('Please enter a valid amount.');
       }
-if ((user?.balance) - amount < 50 ) {
-        throw new Error('Account balance should be greater than 50 Rs.');
-}
+      if ((user?.balance) - amount < 50 ) {
+              throw new Error('Account balance should be greater than 50 Rs.');
+      }
       if (amount > (user?.balance)) {
         throw new Error('Insufficient balance.');
       }
-      if (amount < 100) {
-        throw new Error('Minimum withdraw ₹100.');
+      if (amount < 50) {
+        throw new Error('Minimum withdraw ₹50.');
       }
       
       if (!agreeTerms) {
