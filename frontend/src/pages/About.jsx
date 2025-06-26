@@ -12,7 +12,7 @@ const About = () => {
   }, [location.pathname]);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+//.
   return (
     <div className="bg-gray-900 text-gray-200">
       {/* Hero Section */}
