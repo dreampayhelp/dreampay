@@ -16,6 +16,9 @@ app.use(cors({ origin: ["http://localhost:5173","https://dreampay.vercel.app","h
 app.use(cookieParser());
 
 app.use("/api", routes);
+app.get("/", async(req,res)=>{
+       res.send("dreampay backend is running")
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
